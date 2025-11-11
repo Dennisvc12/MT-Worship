@@ -92,24 +92,34 @@
     <h1>MT Worship</h1>
     <div class="tag">Pistas de alabanza y adoración</div>
 
-    <input type="text" id="nombrePista" placeholder="Nombre de la pista o video 🎵">
-    <input type="text" id="contacto" placeholder="Tu número de contacto o WhatsApp 📱">
+    <!-- Espacio para nombre del video (tú lo llenarás luego) -->
+    <input type="text" id="nombrePista" placeholder="(Aquí irá el nombre del video o pista)" disabled>
+
+    <!-- Campos de contacto -->
+    <input type="email" id="correo" placeholder="Tu correo electrónico ✉️">
+    <input type="text" id="whatsapp" placeholder="Tu número de WhatsApp 📱">
+    <input type="text" id="telegram" placeholder="Tu usuario de Telegram 💬">
 
     <button id="descargarBtn">Descargar pista</button>
 
-    <p>🔔 Escribe el nombre de la pista que deseas y deja tu contacto.  
-      Te enviaremos el enlace de descarga y futuras novedades exclusivas.</p>
+    <p>🔔 Deja tu medio de contacto (correo, WhatsApp o Telegram)  
+      y activa el botón para recibir tu pista y novedades exclusivas.</p>
 
     <footer>© 2025 MT Worship — Todos los derechos reservados</footer>
   </div>
 
   <script>
-    const nombrePista = document.getElementById('nombrePista');
-    const contacto = document.getElementById('contacto');
+    const correo = document.getElementById('correo');
+    const whatsapp = document.getElementById('whatsapp');
+    const telegram = document.getElementById('telegram');
     const boton = document.getElementById('descargarBtn');
 
     function validarCampos() {
-      if (nombrePista.value.trim() !== '' && contacto.value.trim() !== '') {
+      if (
+        correo.value.trim() !== '' ||
+        whatsapp.value.trim() !== '' ||
+        telegram.value.trim() !== ''
+      ) {
         boton.classList.add('active');
         boton.removeAttribute('disabled');
         boton.style.cursor = 'pointer';
@@ -120,12 +130,13 @@
       }
     }
 
-    nombrePista.addEventListener('input', validarCampos);
-    contacto.addEventListener('input', validarCampos);
+    correo.addEventListener('input', validarCampos);
+    whatsapp.addEventListener('input', validarCampos);
+    telegram.addEventListener('input', validarCampos);
 
     boton.addEventListener('click', () => {
       if (boton.classList.contains('active')) {
-        alert(`🎶 Gracias por tu solicitud.\nPista: ${nombrePista.value}\nNos comunicaremos contigo al contacto: ${contacto.value}`);
+        alert(`🎶 Gracias por tu interés en MT Worship.\nNos comunicaremos contigo pronto.`);
       }
     });
   </script>
