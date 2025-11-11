@@ -1,117 +1,148 @@
-<!doctype html>
+<!DOCTYPE html>
 <html lang="es">
 <head>
-  <meta charset="utf-8" />
-  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>MT Worship</title>
   <style>
-    :root{--bg:#0f1724;--card:#0b1220;--accent:#7c3aed;--muted:#aab3c6;--white:#ffffff}
-    *{box-sizing:border-box}
-    html,body{height:100%;margin:0;font-family:Inter, system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial; background:linear-gradient(180deg,#071026 0%,var(--bg) 100%);color:var(--white)}
-    .container{min-height:100vh;display:flex;align-items:center;justify-content:center;padding:24px}
-    .card{width:100%;max-width:880px;background:radial-gradient(1000px 400px at 10% 0%, rgba(124,58,237,0.08), transparent 10%), rgba(255,255,255,0.02);border:1px solid rgba(255,255,255,0.04);padding:36px;border-radius:14px;display:grid;grid-template-columns:1fr 360px;gap:28px;align-items:center}
-    .brand{display:flex;align-items:center;gap:14px}
-    .logo{width:62px;height:62px;border-radius:10px;background:linear-gradient(135deg,var(--accent),#4f46e5);display:flex;align-items:center;justify-content:center;font-weight:700;font-size:20px;box-shadow:0 6px 18px rgba(12,18,36,0.5)}
-    h1{margin:6px 0 4px;font-size:36px;letter-spacing:-0.02em}
-    p.lead{margin:0;color:var(--muted)}
-    .features{margin-top:20px;display:flex;gap:12px;flex-wrap:wrap}
-    .chip{background:rgba(255,255,255,0.03);padding:8px 12px;border-radius:999px;font-size:13px;color:var(--muted);border:1px solid rgba(255,255,255,0.02)}
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+      font-family: 'Poppins', sans-serif;
+    }
 
-    /* right column */
-    .panel{background:linear-gradient(180deg, rgba(255,255,255,0.02), rgba(255,255,255,0.01));padding:20px;border-radius:12px;border:1px solid rgba(255,255,255,0.03)}
-    label{display:block;font-size:13px;color:var(--muted);margin-bottom:6px}
-    input[type="email"]{width:100%;padding:12px;border-radius:8px;border:1px solid rgba(255,255,255,0.04);background:transparent;color:var(--white);outline:none}
-    .btn{display:inline-flex;gap:10px;align-items:center;padding:12px 16px;border-radius:10px;background:linear-gradient(90deg,var(--accent),#4f46e5);border:none;color:var(--white);font-weight:600;cursor:pointer}
-    .btn:disabled{opacity:0.45;cursor:not-allowed}
-    .meta{font-size:13px;color:var(--muted);margin-top:10px}
+    body {
+      background: linear-gradient(135deg, #1e1b4b, #312e81);
+      color: #fff;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      height: 100vh;
+      text-align: center;
+      padding: 20px;
+    }
 
-    .download-note{font-size:13px;color:var(--muted);margin-top:12px}
-    footer{grid-column:1/-1;margin-top:18px;text-align:center;color:var(--muted);font-size:13px}
+    .container {
+      background: rgba(255, 255, 255, 0.05);
+      padding: 40px;
+      border-radius: 16px;
+      box-shadow: 0 4px 20px rgba(0, 0, 0, 0.3);
+      max-width: 480px;
+      width: 100%;
+    }
 
-    @media (max-width:880px){
-      .card{grid-template-columns:1fr;max-width:520px}
-      h1{font-size:30px}
+    h1 {
+      font-size: 2em;
+      margin-bottom: 10px;
+      color: #a78bfa;
+    }
+
+    p {
+      font-size: 0.95em;
+      margin-bottom: 20px;
+      color: #c7d2fe;
+    }
+
+    .chip {
+      display: inline-block;
+      background: rgba(255, 255, 255, 0.1);
+      padding: 8px 14px;
+      border-radius: 999px;
+      font-size: 0.9em;
+      margin-bottom: 15px;
+      color: #c7d2fe;
+    }
+
+    input[type="text"] {
+      width: 100%;
+      padding: 12px;
+      border-radius: 8px;
+      border: none;
+      outline: none;
+      font-size: 1em;
+      margin-bottom: 15px;
+    }
+
+    button {
+      width: 100%;
+      padding: 12px;
+      border: none;
+      border-radius: 8px;
+      background: linear-gradient(90deg, #7c3aed, #4f46e5);
+      color: #fff;
+      font-weight: 600;
+      cursor: pointer;
+      transition: 0.3s ease;
+    }
+
+    button:hover {
+      background: linear-gradient(90deg, #6d28d9, #4338ca);
+      transform: translateY(-2px);
+    }
+
+    footer {
+      margin-top: 25px;
+      font-size: 0.8em;
+      color: #a1a1aa;
+    }
+
+    @media (max-width: 480px) {
+      .container {
+        padding: 25px;
+      }
+      h1 {
+        font-size: 1.8em;
+      }
     }
   </style>
 </head>
 <body>
-  <main class="container">
-    <section class="card" aria-labelledby="title">
-      <div>
-        <div class="brand">
-          <div class="logo">MT</div>
-          <div>
-            <h1 id="title">MT Worship</h1>
-            <p class="lead">Recibe nuestro kit de inicio y recursos de adoración — descarga inmediata</p>
-          </div>
-        </div>
+  <div class="container">
+    <h1>MT Worship</h1>
+    <div class="chip">Pistas de alabanza y adoración</div>
+    <p>Pide tu pista y nosotros la haremos, con tu estilo 🎶</p>
+    
+    <input type="text" id="nombre" placeholder="Nombre de tu grupo o iglesia">
+    <button id="solicitarBtn" disabled>Solicitar pista</button>
 
-        <div class="features" aria-hidden="true">
-          <div class="chip">Pistas de adoración</div>
-          <div class="chip">Acordes y letras</div>
-          <div class="chip">Guías para líderes</div>
-        </div>
-
-        <p class="download-note">Únete a nuestra comunidad y descarga material exclusivo para tu equipo de alabanza. Tu información se mantendrá privada.</p>
-
-        <footer>
-          © <span id="year"></span> MT Worship • Todos los derechos reservados
-        </footer>
-      </div>
-
-      <aside class="panel" aria-labelledby="formTitle">
-        <h2 id="formTitle" style="margin:0 0 10px 0">Descarga instantánea</h2>
-        <label for="email">Correo electrónico</label>
-        <input id="email" type="email" placeholder="tu@correo.com" autocomplete="email" />
-
-        <div style="margin-top:12px;display:flex;gap:10px;align-items:center">
-          <button id="downloadBtn" class="btn" disabled>
-            Descargar kit
-            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M12 3v12" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
-          </button>
-        </div>
-
-        <p class="meta">Al ingresar tu correo aceptas recibir comunicaciones. Puedes darte de baja en cualquier momento.</p>
-      </aside>
-    </section>
-  </main>
+    <footer>
+      © <span id="year"></span> MT Worship — Todos los derechos reservados
+    </footer>
+  </div>
 
   <script>
-    // year
-    document.getElementById('year').textContent = new Date().getFullYear();
+    // Mostrar año actual
+    document.getElementById("year").textContent = new Date().getFullYear();
 
-    const email = document.getElementById('email');
-    const btn = document.getElementById('downloadBtn');
+    const nombreInput = document.getElementById("nombre");
+    const solicitarBtn = document.getElementById("solicitarBtn");
 
-    // activar botón solo si el email luce válido
-    function validEmail(e){
-      return /\S+@\S+\.\S+/.test(e);
-    }
-
-    email.addEventListener('input', ()=>{
-      btn.disabled = !validEmail(email.value.trim());
+    // Activar botón si hay texto
+    nombreInput.addEventListener("input", () => {
+      solicitarBtn.disabled = nombreInput.value.trim().length < 2;
     });
 
-    // al hacer click, generamos un archivo .txt y forzamos la descarga
-    btn.addEventListener('click', ()=>{
-      const userEmail = email.value.trim();
-      const content = `Bienvenido a MT Worship\n\nGracias por descargar nuestro kit.\nCorreo: ${userEmail}\n\nContenido:\n- Pistas de adoración (enlaces)\n- Acordes y letras\n- Guía para líderes\n\nQue Dios te bendiga.`;
-      const blob = new Blob([content], {type:'text/plain;charset=utf-8'});
+    // Simulación de solicitud de pista
+    solicitarBtn.addEventListener("click", () => {
+      const nombre = nombreInput.value.trim();
+      const content = `Gracias por solicitar tu pista en MT Worship!\n\nGrupo o iglesia: ${nombre}\n\nPronto nos pondremos en contacto para crear una pista con tu estilo. 🎵\n\nBendiciones 🙏`;
+
+      const blob = new Blob([content], { type: "text/plain;charset=utf-8" });
       const url = URL.createObjectURL(blob);
-      const a = document.createElement('a');
+      const a = document.createElement("a");
       a.href = url;
-      a.download = 'MT-Worship-Kit.txt';
-      document.body.appendChild(a);
+      a.download = "Solicitud-MT-Worship.txt";
       a.click();
-      a.remove();
       URL.revokeObjectURL(url);
 
-      // pequeño feedback
-      btn.textContent = 'Descargando...';
-      btn.disabled = true;
-      setTimeout(()=>{ btn.textContent = 'Descargar kit'; }, 1500);
-
-      // aquí podrías enviar el email a tu servidor vía fetch para suscripción
+      solicitarBtn.textContent = "Enviando...";
+      solicitarBtn.disabled = true;
+      setTimeout(() => {
+        solicitarBtn.textContent = "Solicitar pista";
+        solicitarBtn.disabled = false;
+        nombreInput.value = "";
+      }, 2000);
     });
   </script>
 </body>
