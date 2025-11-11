@@ -41,12 +41,6 @@
       margin-bottom: 20px;
     }
 
-    p {
-      font-size: 0.95em;
-      color: #d1cfff;
-      margin-bottom: 25px;
-    }
-
     input {
       width: 100%;
       padding: 12px;
@@ -80,6 +74,12 @@
       opacity: 1;
     }
 
+    p {
+      font-size: 0.9em;
+      color: #d1cfff;
+      margin-top: 10px;
+    }
+
     footer {
       margin-top: 25px;
       font-size: 0.8em;
@@ -92,34 +92,27 @@
     <h1>MT Worship</h1>
     <div class="tag">Pistas de alabanza y adoración</div>
 
-    <!-- Espacio para nombre del video (tú lo llenarás luego) -->
+    <!-- Campo del nombre de la pista (tú lo llenas manualmente) -->
     <input type="text" id="nombrePista" placeholder="(Aquí irá el nombre del video o pista)" disabled>
 
-    <!-- Campos de contacto -->
-    <input type="email" id="correo" placeholder="Tu correo electrónico ✉️">
-    <input type="text" id="whatsapp" placeholder="Tu número de WhatsApp 📱">
-    <input type="text" id="telegram" placeholder="Tu usuario de Telegram 💬">
+    <!-- Un solo campo para contacto -->
+    <input type="text" id="contacto" placeholder="Tu correo, WhatsApp o Telegram ✉️📱💬">
 
+    <!-- Botón -->
     <button id="descargarBtn">Descargar pista</button>
 
-    <p>🔔 Deja tu medio de contacto (correo, WhatsApp o Telegram)  
-      y activa el botón para recibir tu pista y novedades exclusivas.</p>
+    <p>🔔 Escribe tu medio de contacto y activa el botón.  
+      Te enviaremos el enlace de descarga y novedades exclusivas.</p>
 
     <footer>© 2025 MT Worship — Todos los derechos reservados</footer>
   </div>
 
   <script>
-    const correo = document.getElementById('correo');
-    const whatsapp = document.getElementById('whatsapp');
-    const telegram = document.getElementById('telegram');
+    const contacto = document.getElementById('contacto');
     const boton = document.getElementById('descargarBtn');
 
-    function validarCampos() {
-      if (
-        correo.value.trim() !== '' ||
-        whatsapp.value.trim() !== '' ||
-        telegram.value.trim() !== ''
-      ) {
+    contacto.addEventListener('input', () => {
+      if (contacto.value.trim() !== '') {
         boton.classList.add('active');
         boton.removeAttribute('disabled');
         boton.style.cursor = 'pointer';
@@ -128,15 +121,11 @@
         boton.setAttribute('disabled', true);
         boton.style.cursor = 'not-allowed';
       }
-    }
-
-    correo.addEventListener('input', validarCampos);
-    whatsapp.addEventListener('input', validarCampos);
-    telegram.addEventListener('input', validarCampos);
+    });
 
     boton.addEventListener('click', () => {
       if (boton.classList.contains('active')) {
-        alert(`🎶 Gracias por tu interés en MT Worship.\nNos comunicaremos contigo pronto.`);
+        alert('🎶 Gracias por tu interés en MT Worship. Te enviaremos tu pista pronto.');
       }
     });
   </script>
