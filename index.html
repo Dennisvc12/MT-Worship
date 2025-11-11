@@ -1,182 +1,122 @@
 <!DOCTYPE html>
 <html lang="es">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>MT Worship - Descarga tu pista</title>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>MT Worship</title>
   <style>
-    /* ===== RESET Y BASE ===== */
     * {
-      box-sizing: border-box;
       margin: 0;
       padding: 0;
+      box-sizing: border-box;
     }
 
     body {
-      font-family: 'Poppins', sans-serif;
-      background: #1b1740;
-      display: flex;
-      justify-content: center;
-      align-items: center;
-      min-height: 100vh;
+      font-family: "Poppins", sans-serif;
+      background: linear-gradient(to bottom right, #000000, #222222);
       color: #fff;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      height: 100vh;
+      text-align: center;
       padding: 20px;
     }
 
-    /* ===== CARD PRINCIPAL ===== */
-    .card {
-      background: rgba(255, 255, 255, 0.05);
-      border-radius: 15px;
-      padding: 40px 30px;
-      width: 100%;
-      max-width: 400px;
-      text-align: center;
-      box-shadow: 0 8px 25px rgba(0, 0, 0, 0.4);
-      backdrop-filter: blur(10px);
-    }
-
     h1 {
-      color: #b89fff;
+      font-size: 2.5em;
+      font-weight: 700;
       margin-bottom: 10px;
-      font-size: 1.9em;
-    }
-
-    .tag {
-      display: inline-block;
-      background: rgba(255, 255, 255, 0.08);
-      padding: 8px 18px;
-      border-radius: 20px;
-      color: #c4b6ff;
-      font-size: 0.9em;
-      margin-bottom: 20px;
-    }
-
-    .nombre-pista {
-      font-size: 1.1em;
-      font-weight: bold;
-      color: #ffffff;
-      letter-spacing: 1px;
-      margin-bottom: 20px;
-    }
-
-    /* ===== INPUT Y BOTÓN ===== */
-    input {
-      width: 100%;
-      padding: 12px;
-      border: none;
-      border-radius: 8px;
-      font-size: 1em;
-      outline: none;
-      margin-bottom: 15px;
-      text-align: center;
-      background: rgba(255, 255, 255, 0.1);
+      letter-spacing: 2px;
+      text-transform: uppercase;
       color: #fff;
     }
 
-    input::placeholder {
-      color: #aaa;
+    h2 {
+      font-size: 1.4em;
+      margin-bottom: 25px;
+      color: #d4d4d4;
+      text-transform: uppercase;
+    }
+
+    p {
+      font-size: 1em;
+      color: #cfcfcf;
+      margin-bottom: 15px;
+      max-width: 400px;
+    }
+
+    input {
+      padding: 12px;
+      width: 100%;
+      max-width: 350px;
+      border: none;
+      border-radius: 8px;
+      outline: none;
+      margin-bottom: 15px;
+      font-size: 1em;
+      text-align: center;
     }
 
     button {
-      width: 100%;
-      padding: 12px;
-      background: linear-gradient(90deg, #7b61ff, #5c4bff);
-      border: none;
-      border-radius: 8px;
+      padding: 12px 30px;
+      background-color: #ff6600;
       color: #fff;
       font-weight: bold;
-      cursor: not-allowed;
-      opacity: 0.6;
-      transition: 0.3s ease;
-    }
-
-    button.active {
+      border: none;
+      border-radius: 8px;
       cursor: pointer;
-      opacity: 1;
+      font-size: 1em;
+      transition: 0.3s;
     }
 
-    button.active:hover {
-      transform: translateY(-2px);
-      box-shadow: 0 4px 12px rgba(124, 97, 255, 0.6);
+    button:disabled {
+      background-color: #777;
+      cursor: not-allowed;
     }
 
-    /* ===== TEXTO Y PIE DE PÁGINA ===== */
-    p {
-      font-size: 0.9em;
-      color: #d1cfff;
-      margin-top: 10px;
-      line-height: 1.4;
+    button:hover:not(:disabled) {
+      background-color: #e65c00;
+      transform: scale(1.05);
     }
 
     footer {
-      margin-top: 25px;
+      position: absolute;
+      bottom: 10px;
       font-size: 0.8em;
-      color: #b3aaff;
+      color: #999;
     }
 
-    /* ===== RESPONSIVE ===== */
-    @media (max-width: 480px) {
-      .card {
-        padding: 30px 20px;
-      }
-
-      h1 {
-        font-size: 1.6em;
-      }
-
-      .nombre-pista {
-        font-size: 1em;
-      }
-
-      input, button {
-        font-size: 0.95em;
-      }
-
-      p {
-        font-size: 0.85em;
-      }
+    /* Responsive */
+    @media (max-width: 600px) {
+      h1 { font-size: 2em; }
+      h2 { font-size: 1.1em; }
+      p { font-size: 0.9em; }
+      button { width: 100%; }
     }
   </style>
 </head>
 <body>
-  <div class="card">
-    <h1>MT Worship</h1>
-    <div class="tag">Pistas de alabanza y adoración</div>
+  <h1>MT Worship</h1>
+  <h2>NOMBRE DEL VIDEO AQUÍ</h2>
+  <p>Escribe tu medio de contacto y activa el botón de descarga y novedades exclusivas.</p>
+  
+  <input type="text" id="contacto" placeholder="Correo, WhatsApp o Telegram">
+  <button id="descargar" disabled>Descargar</button>
 
-    <!-- NOMBRE DEL VIDEO EN MAYÚSCULAS -->
-    <div class="nombre-pista">NOMBRE DE LA PISTA O VIDEO AQUÍ</div>
-
-    <!-- CAMPO DE CONTACTO -->
-    <input type="text" id="contacto" placeholder="Tu correo, WhatsApp o Telegram ✉️📱💬">
-
-    <!-- BOTÓN -->
-    <button id="descargarBtn">Descargar pista</button>
-
-    <p>🔔 Escribe tu medio de contacto y activa el botón de descarga y novedades exclusivas.</p>
-
-    <footer>© 2025 MT Worship — Todos los derechos reservados</footer>
-  </div>
+  <footer>© 2025 MT Worship - Todos los derechos reservados</footer>
 
   <script>
-    const contacto = document.getElementById('contacto');
-    const boton = document.getElementById('descargarBtn');
+    const contactoInput = document.getElementById('contacto');
+    const botonDescargar = document.getElementById('descargar');
 
-    contacto.addEventListener('input', () => {
-      if (contacto.value.trim() !== '') {
-        boton.classList.add('active');
-        boton.removeAttribute('disabled');
-        boton.style.cursor = 'pointer';
-      } else {
-        boton.classList.remove('active');
-        boton.setAttribute('disabled', true);
-        boton.style.cursor = 'not-allowed';
-      }
+    contactoInput.addEventListener('input', () => {
+      botonDescargar.disabled = contactoInput.value.trim() === '';
     });
 
-    boton.addEventListener('click', () => {
-      if (boton.classList.contains('active')) {
-        alert('🎶 Gracias por tu interés en MT Worship. Te enviaremos tu pista pronto.');
-      }
+    botonDescargar.addEventListener('click', () => {
+      alert("✅ Gracias por tu contacto. Pronto recibirás más novedades.");
     });
   </script>
 </body>
