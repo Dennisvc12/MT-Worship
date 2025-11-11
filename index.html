@@ -5,30 +5,40 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>MT Worship - Descarga tu pista</title>
   <style>
+    /* ===== RESET Y BASE ===== */
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
     body {
       font-family: 'Poppins', sans-serif;
       background: #1b1740;
       display: flex;
       justify-content: center;
       align-items: center;
-      height: 100vh;
+      min-height: 100vh;
       color: #fff;
-      margin: 0;
+      padding: 20px;
     }
 
+    /* ===== CARD PRINCIPAL ===== */
     .card {
       background: rgba(255, 255, 255, 0.05);
       border-radius: 15px;
-      padding: 40px;
-      width: 380px;
+      padding: 40px 30px;
+      width: 100%;
+      max-width: 400px;
       text-align: center;
       box-shadow: 0 8px 25px rgba(0, 0, 0, 0.4);
+      backdrop-filter: blur(10px);
     }
 
     h1 {
       color: #b89fff;
       margin-bottom: 10px;
-      font-size: 1.8em;
+      font-size: 1.9em;
     }
 
     .tag {
@@ -49,15 +59,18 @@
       margin-bottom: 20px;
     }
 
+    /* ===== INPUT Y BOTÓN ===== */
     input {
       width: 100%;
       padding: 12px;
       border: none;
       border-radius: 8px;
-      font-size: 0.95em;
+      font-size: 1em;
       outline: none;
       margin-bottom: 15px;
       text-align: center;
+      background: rgba(255, 255, 255, 0.1);
+      color: #fff;
     }
 
     input::placeholder {
@@ -82,16 +95,46 @@
       opacity: 1;
     }
 
+    button.active:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 4px 12px rgba(124, 97, 255, 0.6);
+    }
+
+    /* ===== TEXTO Y PIE DE PÁGINA ===== */
     p {
       font-size: 0.9em;
       color: #d1cfff;
       margin-top: 10px;
+      line-height: 1.4;
     }
 
     footer {
       margin-top: 25px;
       font-size: 0.8em;
       color: #b3aaff;
+    }
+
+    /* ===== RESPONSIVE ===== */
+    @media (max-width: 480px) {
+      .card {
+        padding: 30px 20px;
+      }
+
+      h1 {
+        font-size: 1.6em;
+      }
+
+      .nombre-pista {
+        font-size: 1em;
+      }
+
+      input, button {
+        font-size: 0.95em;
+      }
+
+      p {
+        font-size: 0.85em;
+      }
     }
   </style>
 </head>
@@ -100,13 +143,13 @@
     <h1>MT Worship</h1>
     <div class="tag">Pistas de alabanza y adoración</div>
 
-    <!-- NOMBRE DEL VIDEO O PISTA -->
+    <!-- NOMBRE DEL VIDEO EN MAYÚSCULAS -->
     <div class="nombre-pista">NOMBRE DE LA PISTA O VIDEO AQUÍ</div>
 
-    <!-- Campo para contacto -->
+    <!-- CAMPO DE CONTACTO -->
     <input type="text" id="contacto" placeholder="Tu correo, WhatsApp o Telegram ✉️📱💬">
 
-    <!-- Botón -->
+    <!-- BOTÓN -->
     <button id="descargarBtn">Descargar pista</button>
 
     <p>🔔 Escribe tu medio de contacto y activa el botón de descarga y novedades exclusivas.</p>
