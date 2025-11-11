@@ -123,8 +123,15 @@
     const contactoInput = document.getElementById('contacto');
     const botonDescargar = document.getElementById('descargar');
 
+    function validarContacto(valor) {
+      const correoValido = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+      const telefonoValido = /^\+?\d{8,15}$/; 
+      return correoValido.test(valor) || telefonoValido.test(valor);
+    }
+
     contactoInput.addEventListener('input', () => {
-      botonDescargar.disabled = contactoInput.value.trim() === '';
+      const valor = contactoInput.value.trim();
+      botonDescargar.disabled = !validarContacto(valor);
     });
 
     botonDescargar.addEventListener('click', () => {
