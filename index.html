@@ -1,148 +1,132 @@
 <!DOCTYPE html>
 <html lang="es">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>MT Worship</title>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>MT Worship - Descarga tu pista</title>
   <style>
-    * {
-      margin: 0;
-      padding: 0;
-      box-sizing: border-box;
-      font-family: 'Poppins', sans-serif;
-    }
-
     body {
-      background: linear-gradient(135deg, #1e1b4b, #312e81);
-      color: #fff;
+      font-family: 'Poppins', sans-serif;
+      background: #1b1740;
       display: flex;
       justify-content: center;
       align-items: center;
       height: 100vh;
-      text-align: center;
-      padding: 20px;
+      color: #fff;
+      margin: 0;
     }
 
-    .container {
+    .card {
       background: rgba(255, 255, 255, 0.05);
+      border-radius: 15px;
       padding: 40px;
-      border-radius: 16px;
-      box-shadow: 0 4px 20px rgba(0, 0, 0, 0.3);
-      max-width: 480px;
-      width: 100%;
+      width: 380px;
+      text-align: center;
+      box-shadow: 0 8px 25px rgba(0, 0, 0, 0.4);
     }
 
     h1 {
-      font-size: 2em;
+      color: #b89fff;
       margin-bottom: 10px;
-      color: #a78bfa;
+      font-size: 1.8em;
+    }
+
+    .tag {
+      display: inline-block;
+      background: rgba(255, 255, 255, 0.08);
+      padding: 8px 18px;
+      border-radius: 20px;
+      color: #c4b6ff;
+      font-size: 0.9em;
+      margin-bottom: 20px;
     }
 
     p {
       font-size: 0.95em;
-      margin-bottom: 20px;
-      color: #c7d2fe;
+      color: #d1cfff;
+      margin-bottom: 25px;
     }
 
-    .chip {
-      display: inline-block;
-      background: rgba(255, 255, 255, 0.1);
-      padding: 8px 14px;
-      border-radius: 999px;
-      font-size: 0.9em;
-      margin-bottom: 15px;
-      color: #c7d2fe;
-    }
-
-    input[type="text"] {
+    input {
       width: 100%;
       padding: 12px;
-      border-radius: 8px;
       border: none;
+      border-radius: 8px;
+      font-size: 0.95em;
       outline: none;
-      font-size: 1em;
       margin-bottom: 15px;
+      text-align: center;
+    }
+
+    input::placeholder {
+      color: #aaa;
     }
 
     button {
       width: 100%;
       padding: 12px;
+      background: linear-gradient(90deg, #7b61ff, #5c4bff);
       border: none;
       border-radius: 8px;
-      background: linear-gradient(90deg, #7c3aed, #4f46e5);
       color: #fff;
-      font-weight: 600;
-      cursor: pointer;
+      font-weight: bold;
+      cursor: not-allowed;
+      opacity: 0.6;
       transition: 0.3s ease;
     }
 
-    button:hover {
-      background: linear-gradient(90deg, #6d28d9, #4338ca);
-      transform: translateY(-2px);
+    button.active {
+      cursor: pointer;
+      opacity: 1;
     }
 
     footer {
       margin-top: 25px;
       font-size: 0.8em;
-      color: #a1a1aa;
-    }
-
-    @media (max-width: 480px) {
-      .container {
-        padding: 25px;
-      }
-      h1 {
-        font-size: 1.8em;
-      }
+      color: #b3aaff;
     }
   </style>
 </head>
 <body>
-  <div class="container">
+  <div class="card">
     <h1>MT Worship</h1>
-    <div class="chip">Pistas de alabanza y adoración</div>
-    <p>Pide tu pista y nosotros la haremos, con tu estilo 🎶</p>
-    
-    <input type="text" id="nombre" placeholder="Nombre de tu grupo o iglesia">
-    <button id="solicitarBtn" disabled>Solicitar pista</button>
+    <div class="tag">Pistas de alabanza y adoración</div>
 
-    <footer>
-      © <span id="year"></span> MT Worship — Todos los derechos reservados
-    </footer>
+    <input type="text" id="nombrePista" placeholder="Nombre de la pista o video 🎵">
+    <input type="text" id="contacto" placeholder="Tu número de contacto o WhatsApp 📱">
+
+    <button id="descargarBtn">Descargar pista</button>
+
+    <p>🔔 Escribe el nombre de la pista que deseas y deja tu contacto.  
+      Te enviaremos el enlace de descarga y futuras novedades exclusivas.</p>
+
+    <footer>© 2025 MT Worship — Todos los derechos reservados</footer>
   </div>
 
   <script>
-    // Mostrar año actual
-    document.getElementById("year").textContent = new Date().getFullYear();
+    const nombrePista = document.getElementById('nombrePista');
+    const contacto = document.getElementById('contacto');
+    const boton = document.getElementById('descargarBtn');
 
-    const nombreInput = document.getElementById("nombre");
-    const solicitarBtn = document.getElementById("solicitarBtn");
+    function validarCampos() {
+      if (nombrePista.value.trim() !== '' && contacto.value.trim() !== '') {
+        boton.classList.add('active');
+        boton.removeAttribute('disabled');
+        boton.style.cursor = 'pointer';
+      } else {
+        boton.classList.remove('active');
+        boton.setAttribute('disabled', true);
+        boton.style.cursor = 'not-allowed';
+      }
+    }
 
-    // Activar botón si hay texto
-    nombreInput.addEventListener("input", () => {
-      solicitarBtn.disabled = nombreInput.value.trim().length < 2;
-    });
+    nombrePista.addEventListener('input', validarCampos);
+    contacto.addEventListener('input', validarCampos);
 
-    // Simulación de solicitud de pista
-    solicitarBtn.addEventListener("click", () => {
-      const nombre = nombreInput.value.trim();
-      const content = `Gracias por solicitar tu pista en MT Worship!\n\nGrupo o iglesia: ${nombre}\n\nPronto nos pondremos en contacto para crear una pista con tu estilo. 🎵\n\nBendiciones 🙏`;
-
-      const blob = new Blob([content], { type: "text/plain;charset=utf-8" });
-      const url = URL.createObjectURL(blob);
-      const a = document.createElement("a");
-      a.href = url;
-      a.download = "Solicitud-MT-Worship.txt";
-      a.click();
-      URL.revokeObjectURL(url);
-
-      solicitarBtn.textContent = "Enviando...";
-      solicitarBtn.disabled = true;
-      setTimeout(() => {
-        solicitarBtn.textContent = "Solicitar pista";
-        solicitarBtn.disabled = false;
-        nombreInput.value = "";
-      }, 2000);
+    boton.addEventListener('click', () => {
+      if (boton.classList.contains('active')) {
+        alert(`🎶 Gracias por tu solicitud.\nPista: ${nombrePista.value}\nNos comunicaremos contigo al contacto: ${contacto.value}`);
+      }
     });
   </script>
 </body>
