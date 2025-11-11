@@ -3,120 +3,95 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>MT Worship</title>
+  <title>Descarga y Novedades</title>
   <style>
-    * {
-      margin: 0;
-      padding: 0;
-      box-sizing: border-box;
-    }
-
     body {
-      font-family: "Poppins", sans-serif;
-      background: radial-gradient(circle at top, #4a148c, #1a0033);
-      height: 100vh;
+      font-family: 'Poppins', sans-serif;
+      background: linear-gradient(135deg, #3b0066, #7b2ff7);
+      color: #fff;
       display: flex;
       justify-content: center;
       align-items: center;
-      color: #fff;
+      min-height: 100vh;
+      margin: 0;
+      padding: 20px;
     }
 
     .container {
-      background: rgba(255, 255, 255, 0.05);
-      backdrop-filter: blur(10px);
-      border: 1px solid rgba(255, 255, 255, 0.1);
-      border-radius: 15px;
-      padding: 40px 30px;
+      background-color: rgba(255, 255, 255, 0.1);
+      border-radius: 20px;
+      box-shadow: 0 8px 25px rgba(0, 0, 0, 0.3);
+      padding: 30px;
+      max-width: 420px;
+      width: 100%;
       text-align: center;
-      width: 90%;
-      max-width: 400px;
-      box-shadow: 0 0 20px rgba(0,0,0,0.4);
+      backdrop-filter: blur(10px);
     }
 
     h1 {
-      color: #ffffff;
-      font-size: 2em;
-      margin-bottom: 10px;
-    }
-
-    h2 {
-      color: #d3bdf0;
-      font-size: 1.1em;
+      font-size: 1.8rem;
       text-transform: uppercase;
-      margin-bottom: 25px;
-      letter-spacing: 1px;
+      margin-bottom: 10px;
+      color: #fff;
     }
 
     input {
       width: 100%;
       padding: 12px;
+      margin-top: 20px;
       border: none;
       border-radius: 8px;
-      outline: none;
+      font-size: 1rem;
       text-align: center;
-      font-size: 1em;
-      margin-bottom: 20px;
     }
 
     button {
       width: 100%;
-      padding: 12px;
+      background-color: #7b2ff7;
+      color: white;
       border: none;
       border-radius: 8px;
-      background: linear-gradient(90deg, #8e24aa, #7b1fa2);
-      color: #fff;
-      font-size: 1em;
-      font-weight: bold;
-      cursor: pointer;
-      transition: 0.3s;
-    }
-
-    button:hover:not(:disabled) {
-      transform: scale(1.05);
-      background: linear-gradient(90deg, #9c27b0, #6a1b9a);
-    }
-
-    button:disabled {
-      background: #555;
+      padding: 12px;
+      margin-top: 15px;
+      font-size: 1rem;
       cursor: not-allowed;
+      opacity: 0.6;
+      transition: all 0.3s ease;
+    }
+
+    button.enabled {
+      cursor: pointer;
+      opacity: 1;
+      background-color: #9b4dff;
     }
 
     p {
-      font-size: 0.95em;
-      color: #ddd;
+      font-size: 0.95rem;
       margin-top: 15px;
-      max-width: 350px;
-      margin-left: auto;
-      margin-right: auto;
+      color: #e0d6ff;
     }
 
-    footer {
-      margin-top: 25px;
-      font-size: 0.8em;
-      color: #aaa;
-    }
-
-    @media (max-width: 600px) {
+    @media (max-width: 480px) {
       .container {
-        padding: 30px 20px;
+        padding: 25px 20px;
       }
       h1 {
-        font-size: 1.8em;
+        font-size: 1.5rem;
+      }
+      input, button {
+        font-size: 0.95rem;
       }
     }
   </style>
 </head>
 <body>
   <div class="container">
-    <h1>MT Worship</h1>
-    <h2>NOMBRE DEL VIDEO AQUÍ</h2>
-
+    <h1>NOMBRE DEL VIDEO</h1>
+    
     <input type="text" id="contacto" placeholder="Correo, WhatsApp o Telegram" />
     <button id="descargar" disabled>Descargar</button>
-
+    
     <p>Escribe tu medio de contacto y activa el botón de descarga y novedades exclusivas.</p>
-
-    <footer>© 2025 MT Worship - Todos los derechos reservados</footer>
   </div>
 
   <script>
@@ -124,18 +99,20 @@
     const botonDescargar = document.getElementById('descargar');
 
     function validarContacto(valor) {
-      const correoValido = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-      const telefonoValido = /^\+?\d{8,15}$/; 
-      return correoValido.test(valor) || telefonoValido.test(valor);
+      const esCorreo = /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(valor);
+      const esNumero = /^\+?\d{9,}$/.test(valor.replace(/\s+/g, ''));
+      return esCorreo || esNumero;
     }
 
     contactoInput.addEventListener('input', () => {
       const valor = contactoInput.value.trim();
-      botonDescargar.disabled = !validarContacto(valor);
-    });
-
-    botonDescargar.addEventListener('click', () => {
-      alert("Gracias por tu contacto. Pronto recibirás más novedades.");
+      if (validarContacto(valor)) {
+        botonDescargar.classList.add('enabled');
+        botonDescargar.disabled = false;
+      } else {
+        botonDescargar.classList.remove('enabled');
+        botonDescargar.disabled = true;
+      }
     });
   </script>
 </body>
