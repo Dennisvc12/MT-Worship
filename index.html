@@ -9,8 +9,7 @@
     body {
         background: #f2f2f2;
         font-family: Arial, sans-serif;
-        margin: 0;
-        padding: 0;
+        margin: 0; padding: 0;
     }
 
     .container {
@@ -22,10 +21,7 @@
         box-shadow: 0 0 12px rgba(0,0,0,0.1);
     }
 
-    h2 {
-        text-align: center;
-        margin-bottom: 5px;
-    }
+    h2 { text-align:center; margin-bottom:5px; }
 
     input {
         width: 100%;
@@ -46,68 +42,61 @@
         border: none;
         cursor: pointer;
     }
-
-    button:hover {
-        background: #333;
-    }
+    button:hover { background:#333; }
 
     .alerta {
-        background: #ffefb0;
-        padding: 10px;
-        border-radius: 6px;
-        font-size: 14px;
-        margin-bottom: 15px;
+        background:#ffefb0;
+        padding:10px;
+        border-radius:6px;
+        font-size:14px;
+        margin-bottom:15px;
     }
 
     iframe {
-        width: 100%;
-        border-radius: 8px;
-        height: 220px;
+        width:100%;
+        border-radius:8px;
+        height:220px;
     }
 
-    @media (min-width: 600px) {
-        iframe {
-            height: 300px;
-        }
+    @media (min-width:600px){
+        iframe { height:300px; }
     }
 </style>
 </head>
 
 <body>
 
+<!--  PANTALLA 1  -->
 <div class="container" id="pantalla1">
     <h2>Con la Sombra de Pedro</h2>
     <p style="text-align:center;margin-top:-5px;">Pista Manolo Solano</p>
 
-    <form action="https://formsubmit.co/dennisvcdoce@gmail.com" method="POST" id="formulario">
-        <input type="hidden" name="_subject" value="Nuevo registro de Sombra de Pedro">
-        <input type="hidden" name="_captcha" value="false">
-        <input type="hidden" name="_template" value="box">
-
-        <input type="text" name="dato" id="dato" placeholder="Correo o número" required>
-
+    <form id="formulario">
+        <input type="text" id="dato" name="dato"
+               placeholder="Correo o número" required>
         <button type="submit">Continuar</button>
     </form>
 </div>
 
-<!-- Pantalla 2 -->
+<!--  PANTALLA 2  -->
 <div class="container" id="pantalla2" style="display:none;">
     <div class="alerta">
-        ⚠ Puede aparecer publicidad.  
-        Si pasa, vuelve y presiona **YA PUEDES VER EL VIDEO**.
+        ⚠ Puede abrirse publicidad.  
+        Si pasa, vuelve aquí y presiona **YA PUEDES VER EL VIDEO**.
     </div>
 
     <button id="verVideoBtn">YA PUEDES VER EL VIDEO</button>
 
     <div id="videoBox" style="display:none; margin-top:15px;">
-        <iframe class="rumble"
-            src="https://rumble.com/embed/v6zsmu6/?pub=4ns49a"
-            allowfullscreen>
+        <iframe class="rumble" 
+                src="https://rumble.com/embed/v6zsmu6/?pub=4ns49a"
+                allowfullscreen>
         </iframe>
 
-        <a href="https://rumble.com/embed/v6zsmu6/?pub=4ns49a" download 
-            style="text-decoration:none;">
-            <button style="margin-top:15px; background:#0b5ed7;">⬇ Descargar video</button>
+        <a href="https://rumble.com/embed/v6zsmu6/?pub=4ns49a" download>
+            <button style="margin-top:15px;background:#0b5ed7;">
+                ⬇ Descargar video
+            </button>
         </a>
     </div>
 </div>
@@ -116,26 +105,35 @@
 let primeraVez = true;
 const smartLink = "https://otieu.com/4/10211991";
 
+// Interceptar envío y enviarlo por AJAX
 document.getElementById("formulario").addEventListener("submit", function(e){
     e.preventDefault();
 
-    // enviar datos
-    this.submit();
+    const valor = document.getElementById("dato").value;
 
-    // mostrar segunda pantalla
+    // Enviar a FormSubmit sin recargar
+    fetch("https://formsubmit.co/ajax/dennisvcdoce@gmail.com", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+            dato: valor,
+            _subject: "Nuevo registro desde Landing",
+            _captcha: "false"
+        })
+    });
+
+    // Mostrar pantalla 2
     document.getElementById("pantalla1").style.display = "none";
     document.getElementById("pantalla2").style.display = "block";
 });
 
-// botón ver video
+// Botón ver video
 document.getElementById("verVideoBtn").addEventListener("click", function(){
     if (primeraVez) {
         window.open(smartLink, "_blank");
         primeraVez = false;
         return;
     }
-
-    // segunda vez → mostrar video
     document.getElementById("videoBox").style.display = "block";
 });
 </script>
