@@ -8,54 +8,51 @@
 <style>
     body {
         font-family: Arial, sans-serif;
-        background: #f3f3f3;
+        background: #f5f5f5;
         margin: 0;
         padding: 20px;
         text-align: center;
     }
-    #contenedor-form {
+    #box {
         max-width: 420px;
         margin: auto;
         background: white;
-        padding: 20px;
+        padding: 25px;
         border-radius: 12px;
-        box-shadow: 0px 0px 10px rgba(0,0,0,0.1);
+        box-shadow: 0 0 10px rgba(0,0,0,0.1);
     }
-    #btnVideo {
-        margin-top: 20px;
-        padding: 15px;
+    input, button {
         width: 100%;
-        font-size: 18px;
+        padding: 14px;
+        margin: 10px 0;
+        font-size: 17px;
+        border-radius: 8px;
+        border: 1px solid #ccc;
+    }
+    button {
         background: #111;
         color: white;
-        border: none;
-        border-radius: 8px;
         cursor: pointer;
-        display: none; /* Oculto por defecto */
+        border: none;
+    }
+    #verVideoBtn {
+        display: none;
     }
 </style>
 
 <script>
 let videoUnlocked = false;
 
-// Aparece cuando el usuario ya pasó por el formulario
-function mostrarBoton() {
-    document.getElementById("btnVideo").style.display = "block";
-}
-
-// SIEMPRE al cargar la página, revisamos si el usuario ya completó el form
 window.onload = function() {
     if (localStorage.getItem("formCompleto") === "1") {
-        mostrarBoton();
+        document.getElementById("verVideoBtn").style.display = "block";
     }
 };
 
-// PRIMER clic → Smartlink
-// SEGUNDO clic → Desbloquea video
 function verVideo() {
     if (!videoUnlocked) {
         videoUnlocked = true;
-        window.location.href = "https://otieu.com/4/10211991";
+        window.location.href = "TU_SMARTLINK_AQUI";
     } else {
         document.getElementById("videoContainer").style.display = "block";
         window.location.href = "#videoContainer";
@@ -66,22 +63,29 @@ function verVideo() {
 </head>
 <body>
 
-<div id="contenedor-form">
+<div id="box">
+    <h2>Con la Sombra de Pedro</h2>
 
-    <!-- GOOGLE FORM -->
-    <iframe src="https://docs.google.com/forms/d/e/1FAIpQLScbCx1XvqX7hpjmEIpNSli6qqYmhE1CVBv7CfuXiZDslVtBVQ/viewform?embedded=true"
-    width="100%" height="500" frameborder="0" marginheight="0" marginwidth="0">Cargando…</iframe>
+    <!-- FORMULARIO QUE ENVÍA A TU CORREO -->
+    <form action="https://formsubmit.co/dennisvcdoce@gmail.com" method="POST">
 
-    <!-- BOTÓN OCULTO -->
-    <button id="btnVideo" onclick="verVideo()">Ver Video</button>
+        <input type="hidden" name="_next" value="https://TUDOMINIO.COM/index.html?ok=1">
+        <input type="hidden" name="_captcha" value="false">
+
+        <input type="email" name="email" placeholder="Correo electrónico" required>
+
+        <input type="text" name="celular" placeholder="Número de celular (con código de país)" required>
+
+        <button type="submit">Continuar</button>
+    </form>
+
+    <!-- BOTÓN APARECE SOLO CUANDO REGRESAN -->
+    <button id="verVideoBtn" onclick="verVideo()">Ver Video</button>
 </div>
 
-<br>
-
 <!-- VIDEO OCULTO -->
-<div id="videoContainer" style="display:none; max-width:700px; margin:auto;">
+<div id="videoContainer" style="display:none; margin-top:40px; max-width:700px; margin:auto;">
 
-    <!-- RUMBLE EMBED -->
     <script>
     !function(r,u,m,b,l,e){
         r._Rumble=b,
@@ -110,18 +114,11 @@ function verVideo() {
 </div>
 
 <script>
-/* Este truco marca que el usuario salió de la página al formulario */
-window.onbeforeunload = function(){
-    // Guardia de seguridad por si sale sin completar el form
-    // No hacemos nada aquí
-};
-
-// Detectamos cuando regrese (historial del navegador)
+// Detectar cuando el usuario vuelve de FormSubmit
 window.addEventListener("pageshow", function(event) {
-    if (event.persisted || performance.getEntriesByType("navigation")[0].type === "back_forward") {
-        // Marcamos que ya completó el formulario
+    if (window.location.search.includes("ok=1")) {
         localStorage.setItem("formCompleto", "1");
-        mostrarBoton();
+        document.getElementById("verVideoBtn").style.display = "block";
     }
 });
 </script>
