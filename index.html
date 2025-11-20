@@ -2,34 +2,85 @@
 <html lang="es">
 <head>
 <meta charset="UTF-8">
-<title>Con la Sombra de Pedro Pista Manolo Solano</title>
+<title>Con la Sombra de Pedro</title>
+<meta name="viewport" content="width=device-width, initial-scale=1">
+
 <style>
-    body { font-family: Arial; background: #f5f5f5; padding: 30px; text-align: center; }
-    .card { background: white; padding: 25px; max-width: 380px; margin: auto; border-radius: 12px; box-shadow: 0 0 10px #0002; }
-    input, select { width: 100%; padding: 10px; margin: 10px 0; border-radius: 8px; border: 1px solid #aaa; }
-    button { background: black; color: white; padding: 12px; border: none; border-radius: 8px; cursor: pointer; width: 100%; font-size: 16px; }
-    #verVideoBtn { display: none; }
-    #codigo { display: none; }
+    body {
+        font-family: Arial;
+        background: #f3f3f3;
+        margin: 0;
+        padding: 20px;
+        text-align: center;
+    }
+
+    .card {
+        background: white;
+        padding: 25px;
+        max-width: 480px;
+        margin: auto;
+        border-radius: 14px;
+        box-shadow: 0 0 12px #0002;
+    }
+
+    input, select {
+        width: 100%;
+        padding: 12px;
+        margin: 10px 0;
+        border-radius: 8px;
+        border: 1px solid #aaa;
+        font-size: 16px;
+    }
+
+    button {
+        background: black;
+        color: white;
+        padding: 14px;
+        border: none;
+        border-radius: 8px;
+        cursor: pointer;
+        width: 100%;
+        font-size: 18px;
+        margin-top: 10px;
+    }
+
+    button:hover {
+        background: #222;
+    }
+
+    iframe {
+        width: 100%;
+        max-width: 100%;
+        border-radius: 12px;
+    }
+
+    #codigo {
+        display: none;
+    }
+
+    #verVideoBtn {
+        display: none;
+    }
 </style>
 </head>
+
 <body>
 
 <div class="card">
+
     <h2>Con la Sombra de Pedro</h2>
 
     <form id="leadForm" method="POST" action="send.php">
-        
+
         <select id="tipo" name="tipo" required>
             <option value="">Elegir dato a registrar</option>
             <option value="email">Correo electrónico</option>
             <option value="celular">Número de celular</option>
         </select>
 
+        <!-- LISTA COMPLETA DE CÓDIGOS DE PAÍS -->
         <select id="codigo" name="codigo">
-            <option value="+51">🇵🇪 Perú (+51)</option>
-            <option value="+57">🇨🇴 Colombia (+57)</option>
-            <option value="+52">🇲🇽 México (+52)</option>
-            <option value="+1">🇺🇸 USA (+1)</option>
+            <option value="">Seleccionar país</option>
         </select>
 
         <input type="text" id="dato" name="dato" placeholder="Escribe aquí..." required>
@@ -38,10 +89,31 @@
     </form>
 
     <button id="verVideoBtn">VER VIDEO</button>
+
 </div>
 
 <script>
-// Mostrar código de país solo si eligen celular
+// Lista completa de países con códigos
+const paises = {
+    "Afganistán":"+93","Alemania":"+49","Argentina":"+54","Australia":"+61","Bolivia":"+591",
+    "Brasil":"+55","Canadá":"+1","Chile":"+56","China":"+86","Colombia":"+57",
+    "Costa Rica":"+506","Cuba":"+53","Ecuador":"+593","El Salvador":"+503","España":"+34",
+    "Estados Unidos":"+1","Francia":"+33","Guatemala":"+502","Honduras":"+504",
+    "Italia":"+39","Japón":"+81","México":"+52","Panamá":"+507","Paraguay":"+595",
+    "Perú":"+51","Reino Unido":"+44","Rep. Dominicana":"+1","Uruguay":"+598",
+    "Venezuela":"+58"
+};
+
+// Rellenar lista de países
+const selectCodigo = document.getElementById("codigo");
+Object.keys(paises).forEach(p=>{
+    let op = document.createElement("option");
+    op.value = paises[p];
+    op.textContent = p + " (" + paises[p] + ")";
+    selectCodigo.appendChild(op);
+});
+
+// Mostrar código si eligen celular
 document.getElementById("tipo").addEventListener("change", function() {
     const codigo = document.getElementById("codigo");
     const dato = document.getElementById("dato");
@@ -55,50 +127,45 @@ document.getElementById("tipo").addEventListener("change", function() {
     }
 });
 
-// Envío del formulario
+// Enviar formulario
 document.getElementById("leadForm").addEventListener("submit", function(e){
     e.preventDefault();
 
-    const form = e.target;
-
     fetch("send.php", {
         method: "POST",
-        body: new FormData(form)
+        body: new FormData(this)
     })
     .then(res => res.text())
-    .then(data => {
+    .then(() => {
         document.getElementById("leadForm").style.display = "none";
+
         const btn = document.getElementById("verVideoBtn");
         btn.style.display = "block";
 
-        let firstClick = true;
+        let primerClick = true;
 
         btn.onclick = function(){
-
-            if(firstClick){
-                // PRIMER CLICK → SMARTLINK (NUEVA PESTAÑA)
+            if(primerClick){
+                // PRIMER CLICK → SMARTLINK EN OTRA PESTAÑA
                 window.open("https://otieu.com/4/10211991", "_blank");
-                firstClick = false;
-                btn.textContent = "VER VIDEO AHORA";
+                this.textContent = "VER VIDEO AHORA";
+                primerClick = false;
             } else {
-                // SEGUNDO CLICK → VIDEO EN LA MISMA PAGINA
-                location.href = "";
+                // SEGUNDO CLICK → DESPLAZA AL VIDEO
+                window.location = "#video";
             }
         };
     });
 });
 </script>
 
-<!-- <script>!function(r,u,m,b,l,e){r._Rumble=b,r[b]||(r[b]=function(){(r[b]._=r[b]._||[]).push(arguments);if(r[b]._.length==1){l=u.createElement(m),e=u.getElementsByTagName(m)[0],l.async=1,l.src="https://rumble.com/embedJS/u4ns49a"+(arguments[1].video?'.'+arguments[1].video:'')+"/?url="+encodeURIComponent(location.href)+"&args="+encodeURIComponent(JSON.stringify([].slice.apply(arguments))),e.parentNode.insertBefore(l,e)}})}(window, document, "script", "Rumble");</script>
-
-<div id="rumble_v6zsmu6"></div>
-<script>
-Rumble("play", {"video":"v6zsmu6","div":"rumble_v6zsmu6"});</script> -->
+<!-- VIDEO -->
 <div id="video" style="margin-top:40px;">
-    <!-- <iframe class="rumble" width="640" height="360" src="https://rumble.com/embed/v6zsmu6/?pub=4ns49a" frameborder="0" allowfullscreen></iframe> -->
+    <iframe class="rumble" width="640" height="360"
+     src="https://rumble.com/embed/v6zsmu6/?pub=4ns49a"
+     frameborder="0" allowfullscreen>
+    </iframe>
 </div>
 
 </body>
 </html>
-
-
