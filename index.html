@@ -1,119 +1,98 @@
 <!DOCTYPE html>
 <html lang="es">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Descarga y Novedades</title>
-  <style>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Con la Sombra de Pedro</title>
+
+<style>
     body {
-      font-family: 'Poppins', sans-serif;
-      background: linear-gradient(135deg, #3b0066, #7b2ff7);
-      color: #fff;
-      display: flex;
-      justify-content: center;
-      align-items: center;
-      min-height: 100vh;
-      margin: 0;
-      padding: 20px;
+        font-family: Arial, sans-serif;
+        background: #f7f7f7;
+        margin: 0;
+        padding: 20px;
+        text-align: center;
     }
-
-    .container {
-      background-color: rgba(255, 255, 255, 0.1);
-      border-radius: 20px;
-      box-shadow: 0 8px 25px rgba(0, 0, 0, 0.3);
-      padding: 30px;
-      max-width: 420px;
-      width: 100%;
-      text-align: center;
-      backdrop-filter: blur(10px);
-    }
-
     h1 {
-      font-size: 1.8rem;
-      text-transform: uppercase;
-      margin-bottom: 10px;
-      color: #fff;
+        font-size: 30px;
+        margin-bottom: 20px;
     }
+    #contenedor-form {
+        max-width: 420px;
+        margin: auto;
+        background: white;
+        padding: 20px;
+        border-radius: 12px;
+        box-shadow: 0px 0px 10px rgba(0,0,0,0.1);
+    }
+    #btnVideo {
+        margin-top: 20px;
+        padding: 15px;
+        width: 100%;
+        font-size: 18px;
+        background: #111;
+        color: white;
+        border: none;
+        border-radius: 8px;
+        cursor: pointer;
+        display: none; /* Oculto hasta que llenen el formulario */
+    }
+    iframe {
+        width: 100%;
+    }
+</style>
 
-    input {
-      width: 100%;
-      padding: 12px;
-      margin-top: 20px;
-      border: none;
-      border-radius: 8px;
-      font-size: 1rem;
-      text-align: center;
-    }
+<script>
+let videoUnlocked = false;
 
-    button {
-      width: 100%;
-      background-color: #7b2ff7;
-      color: white;
-      border: none;
-      border-radius: 8px;
-      padding: 12px;
-      margin-top: 15px;
-      font-size: 1rem;
-      cursor: not-allowed;
-      opacity: 0.6;
-      transition: all 0.3s ease;
-    }
+function activarBoton() {
+    document.getElementById("btnVideo").style.display = "block";
+}
 
-    button.enabled {
-      cursor: pointer;
-      opacity: 1;
-      background-color: #9b4dff;
+function verVideo() {
+    if (!videoUnlocked) {
+        // PRIMER CLICK → IR AL SMARTLINK
+        videoUnlocked = true;
+        window.location.href = "AQUI_PONES_TU_SMARTLINK";
+    } else {
+        // SEGUNDO CLICK → MOSTRAR VIDEO
+        document.getElementById("videoContainer").style.display = "block";
+        window.location.href = "#videoContainer";
     }
+}
+</script>
 
-    p {
-      font-size: 0.95rem;
-      margin-top: 15px;
-      color: #e0d6ff;
-    }
-
-    @media (max-width: 480px) {
-      .container {
-        padding: 25px 20px;
-      }
-      h1 {
-        font-size: 1.5rem;
-      }
-      input, button {
-        font-size: 0.95rem;
-      }
-    }
-  </style>
 </head>
 <body>
-  <div class="container">
-    <h1>NOMBRE DEL VIDEO</h1>
-    
-    <input type="text" id="contacto" placeholder="Correo, WhatsApp o Telegram" />
-    <button id="descargar" disabled>Descargar</button>
-    
-    <p>Escribe tu medio de contacto y activa el botón de descarga y novedades exclusivas.</p>
-  </div>
 
-  <script>
-    const contactoInput = document.getElementById('contacto');
-    const botonDescargar = document.getElementById('descargar');
+<h1>Con la Sombra de Pedro</h1>
 
-    function validarContacto(valor) {
-      const esCorreo = /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(valor);
-      const esNumero = /^\+?\d{9,}$/.test(valor.replace(/\s+/g, ''));
-      return esCorreo || esNumero;
+<div id="contenedor-form">
+    <!-- AQUÍ PEGAS EL IFRAME DE TU GOOGLE FORM -->
+    <!-- Ejemplo: -->
+    <!-- <iframe src="URL_DEL_GOOGLE_FORM" width="100%" height="480" frameborder="0"></iframe> -->
+
+    <button id="btnVideo" onclick="verVideo()">Ver Video</button>
+</div>
+
+<br>
+
+<div id="videoContainer" style="display:none; max-width:700px; margin:auto;">
+    <!-- AQUÍ PEGAS EL EMBED DE TU VIDEO -->
+    <!-- Ejemplo:
+    <iframe src="URL_DEL_VIDEO" frameborder="0" allowfullscreen></iframe>
+    -->
+</div>
+
+<script>
+/* Detecta cuando el usuario termina el formulario */
+window.addEventListener("message", function(event) {
+    // Si Google Form redirige a la página de confirmación
+    if (event.data === "formSubmitted") {
+        activarBoton();
     }
+});
+</script>
 
-    contactoInput.addEventListener('input', () => {
-      const valor = contactoInput.value.trim();
-      if (validarContacto(valor)) {
-        botonDescargar.classList.add('enabled');
-        botonDescargar.disabled = false;
-      } else {
-        botonDescargar.classList.remove('enabled');
-        botonDescargar.disabled = true;
-      }
-    });
-  </script>
 </body>
 </html>
