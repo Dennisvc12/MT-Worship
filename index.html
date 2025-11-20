@@ -7,20 +7,28 @@
 
 <style>
     body {
-        font-family: Arial;
+        font-family: Arial, sans-serif;
         background: #f3f3f3;
         margin: 0;
+        padding: 0;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        min-height: 100vh;
+    }
+
+    .container {
+        width: 100%;
+        max-width: 420px;
         padding: 20px;
-        text-align: center;
     }
 
     .card {
         background: white;
         padding: 25px;
-        max-width: 480px;
-        margin: auto;
         border-radius: 14px;
-        box-shadow: 0 0 12px #0002;
+        box-shadow: 0px 0px 12px #0002;
+        text-align: center;
     }
 
     input, select {
@@ -33,19 +41,25 @@
     }
 
     button {
-        background: black;
-        color: white;
+        width: 100%;
         padding: 14px;
         border: none;
         border-radius: 8px;
-        cursor: pointer;
-        width: 100%;
+        background: black;
+        color: white;
         font-size: 18px;
-        margin-top: 10px;
+        cursor: pointer;
     }
 
     button:hover {
         background: #222;
+    }
+
+    /* VIDEO OCULTO AL INICIO */
+    #video {
+        display: none;
+        margin-top: 40px;
+        text-align: center;
     }
 
     iframe {
@@ -65,30 +79,40 @@
 </head>
 
 <body>
+<div class="container">
 
-<div class="card">
+    <div class="card">
 
-    <h2>Con la Sombra de Pedro</h2>
+        <h2>Con la Sombra de Pedro</h2>
 
-    <form id="leadForm" method="POST" action="send.php">
+        <form id="leadForm" method="POST" action="send.php">
 
-        <select id="tipo" name="tipo" required>
-            <option value="">Elegir dato a registrar</option>
-            <option value="email">Correo electrónico</option>
-            <option value="celular">Número de celular</option>
-        </select>
+            <select id="tipo" name="tipo" required>
+                <option value="">Elegir dato a registrar</option>
+                <option value="email">Correo electrónico</option>
+                <option value="celular">Número de celular</option>
+            </select>
 
-        <!-- LISTA COMPLETA DE CÓDIGOS DE PAÍS -->
-        <select id="codigo" name="codigo">
-            <option value="">Seleccionar país</option>
-        </select>
+            <select id="codigo" name="codigo">
+                <option value="">Seleccionar país</option>
+            </select>
 
-        <input type="text" id="dato" name="dato" placeholder="Escribe aquí..." required>
+            <input type="text" id="dato" name="dato" placeholder="Escribe aquí..." required>
 
-        <button type="submit">Enviar</button>
-    </form>
+            <button type="submit">Enviar</button>
+        </form>
 
-    <button id="verVideoBtn">VER VIDEO</button>
+        <button id="verVideoBtn">VER VIDEO</button>
+
+    </div>
+
+    <!-- VIDEO OCULTO -->
+    <div id="video">
+        <iframe class="rumble" width="640" height="360"
+         src="https://rumble.com/embed/v6zsmu6/?pub=4ns49a"
+         frameborder="0" allowfullscreen>
+        </iframe>
+    </div>
 
 </div>
 
@@ -127,7 +151,7 @@ document.getElementById("tipo").addEventListener("change", function() {
     }
 });
 
-// Enviar formulario
+// Envío del formulario
 document.getElementById("leadForm").addEventListener("submit", function(e){
     e.preventDefault();
 
@@ -137,8 +161,11 @@ document.getElementById("leadForm").addEventListener("submit", function(e){
     })
     .then(res => res.text())
     .then(() => {
+
+        // Ocultar form
         document.getElementById("leadForm").style.display = "none";
 
+        // Mostrar botón ver video
         const btn = document.getElementById("verVideoBtn");
         btn.style.display = "block";
 
@@ -146,26 +173,20 @@ document.getElementById("leadForm").addEventListener("submit", function(e){
 
         btn.onclick = function(){
             if(primerClick){
-                // PRIMER CLICK → SMARTLINK EN OTRA PESTAÑA
+                // Primer click → Smartlink
                 window.open("https://otieu.com/4/10211991", "_blank");
                 this.textContent = "VER VIDEO AHORA";
                 primerClick = false;
             } else {
-                // SEGUNDO CLICK → DESPLAZA AL VIDEO
+                // Segundo click → mostrar video
+                document.getElementById("video").style.display = "block";
                 window.location = "#video";
             }
         };
+
     });
 });
 </script>
-
-<!-- VIDEO -->
-<div id="video" style="margin-top:40px;">
-    <iframe class="rumble" width="640" height="360"
-     src="https://rumble.com/embed/v6zsmu6/?pub=4ns49a"
-     frameborder="0" allowfullscreen>
-    </iframe>
-</div>
 
 </body>
 </html>
