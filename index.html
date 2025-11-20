@@ -31,21 +31,31 @@
         border: none;
         border-radius: 8px;
         cursor: pointer;
-        display: none; /* Oculto hasta que llenen el formulario */
+        display: none; /* Oculto por defecto */
     }
 </style>
 
 <script>
 let videoUnlocked = false;
 
-function activarBoton() {
+// Aparece cuando el usuario ya pasó por el formulario
+function mostrarBoton() {
     document.getElementById("btnVideo").style.display = "block";
 }
 
+// SIEMPRE al cargar la página, revisamos si el usuario ya completó el form
+window.onload = function() {
+    if (localStorage.getItem("formCompleto") === "1") {
+        mostrarBoton();
+    }
+};
+
+// PRIMER clic → Smartlink
+// SEGUNDO clic → Desbloquea video
 function verVideo() {
     if (!videoUnlocked) {
         videoUnlocked = true;
-        window.location.href = "AQUI-PONES-TU-SMARTLINK"; 
+        window.location.href = "https://otieu.com/4/10211991";
     } else {
         document.getElementById("videoContainer").style.display = "block";
         window.location.href = "#videoContainer";
@@ -58,20 +68,20 @@ function verVideo() {
 
 <div id="contenedor-form">
 
-    <!-- TU GOOGLE FORM (insertado totalmente) -->
+    <!-- GOOGLE FORM -->
     <iframe src="https://docs.google.com/forms/d/e/1FAIpQLScbCx1XvqX7hpjmEIpNSli6qqYmhE1CVBv7CfuXiZDslVtBVQ/viewform?embedded=true"
     width="100%" height="500" frameborder="0" marginheight="0" marginwidth="0">Cargando…</iframe>
 
-    <!-- BOTÓN QUE SOLO SALE DESPUÉS DEL FORM -->
+    <!-- BOTÓN OCULTO -->
     <button id="btnVideo" onclick="verVideo()">Ver Video</button>
 </div>
 
 <br>
 
-<!-- CONTENEDOR DEL VIDEO -->
+<!-- VIDEO OCULTO -->
 <div id="videoContainer" style="display:none; max-width:700px; margin:auto;">
 
-    <!-- VIDEO DE RUMBLE (insertado completamente) -->
+    <!-- RUMBLE EMBED -->
     <script>
     !function(r,u,m,b,l,e){
         r._Rumble=b,
@@ -100,10 +110,18 @@ function verVideo() {
 </div>
 
 <script>
-/* Detecta si el usuario terminó el formulario */
-window.addEventListener("message", function(event) {
-    if (event.data === "formSubmitted") {
-        activarBoton();
+/* Este truco marca que el usuario salió de la página al formulario */
+window.onbeforeunload = function(){
+    // Guardia de seguridad por si sale sin completar el form
+    // No hacemos nada aquí
+};
+
+// Detectamos cuando regrese (historial del navegador)
+window.addEventListener("pageshow", function(event) {
+    if (event.persisted || performance.getEntriesByType("navigation")[0].type === "back_forward") {
+        // Marcamos que ya completó el formulario
+        localStorage.setItem("formCompleto", "1");
+        mostrarBoton();
     }
 });
 </script>
