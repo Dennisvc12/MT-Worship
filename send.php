@@ -1,11 +1,15 @@
 <?php
 $correoDestino = "dennisvcdoce@gmail.com";
 
-$email = $_POST["email"];
-$codigo = $_POST["codigo"];
-$telefono = $_POST["telefono"];
+$tipo = $_POST["tipo"];
+$dato = $_POST["dato"];
+$codigo = isset($_POST["codigo"]) ? $_POST["codigo"] : "";
 
-$mensaje = "Nuevo registro:\n\nCorreo: $email\nTeléfono: $codigo $telefono";
+if($tipo === "celular"){
+    $mensaje = "Nuevo registro:\n\nCelular: $codigo $dato";
+} else {
+    $mensaje = "Nuevo registro:\n\nCorreo: $dato";
+}
 
 $headers = "From: Notificaciones <no-reply@tu-dominio.com>";
 
