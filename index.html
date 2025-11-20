@@ -1,148 +1,143 @@
 <!DOCTYPE html>
 <html lang="es">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Con la Sombra de Pedro</title>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Con la Sombra de Pedro – Pista Manolo Solano</title>
 
 <style>
-    body{
+    body {
+        background: #f2f2f2;
         font-family: Arial, sans-serif;
-        background:#f2f2f2;
-        margin:0;
-        padding:20px;
+        margin: 0;
+        padding: 0;
     }
 
-    .container{
-        max-width:450px;
-        margin:auto;
-        background:white;
-        padding:25px;
-        border-radius:15px;
-        box-shadow:0 3px 15px rgba(0,0,0,0.1);
+    .container {
+        max-width: 420px;
+        margin: 20px auto;
+        background: white;
+        padding: 25px;
+        border-radius: 12px;
+        box-shadow: 0 0 12px rgba(0,0,0,0.1);
     }
 
-    h2{
-        text-align:center;
-        margin-top:0;
+    h2 {
+        text-align: center;
+        margin-bottom: 5px;
     }
 
-    .alerta{
-        background:#fff3c4;
-        padding:10px;
-        border-left:5px solid #e0a000;
-        border-radius:8px;
-        font-size:14px;
-        margin-bottom:20px;
+    input {
+        width: 100%;
+        padding: 12px;
+        margin: 10px 0;
+        border-radius: 6px;
+        border: 1px solid #ddd;
+        font-size: 16px;
     }
 
-    input{
-        width:100%;
-        padding:12px;
-        margin-top:10px;
-        border:1px solid #ccc;
-        border-radius:8px;
-        font-size:15px;
+    button {
+        width: 100%;
+        padding: 14px;
+        background: black;
+        color: white;
+        font-size: 16px;
+        border-radius: 6px;
+        border: none;
+        cursor: pointer;
     }
 
-    button{
-        width:100%;
-        background:black;
-        color:white;
-        padding:13px;
-        border:none;
-        margin-top:15px;
-        border-radius:8px;
-        font-weight:bold;
-        font-size:15px;
-        cursor:pointer;
+    button:hover {
+        background: #333;
     }
 
-    .video-container{
-        margin-top:25px;
-        display:none;
+    .alerta {
+        background: #ffefb0;
+        padding: 10px;
+        border-radius: 6px;
+        font-size: 14px;
+        margin-bottom: 15px;
     }
 
-    iframe{
-        width:100%;
-        aspect-ratio:16/9;
-        border-radius:10px;
-        border:0;
+    iframe {
+        width: 100%;
+        border-radius: 8px;
+        height: 220px;
     }
 
-    .download-btn{
-        width:100%;
-        background:#1a73e8;
-        color:white;
-        padding:12px;
-        border:none;
-        border-radius:8px;
-        margin-top:15px;
-        font-size:15px;
-        font-weight:bold;
-        cursor:pointer;
+    @media (min-width: 600px) {
+        iframe {
+            height: 300px;
+        }
     }
 </style>
 </head>
 
 <body>
 
-<div class="container">
-
+<div class="container" id="pantalla1">
     <h2>Con la Sombra de Pedro</h2>
-    <p style="text-align:center;">Deja tu correo o número y accede al video.</p>
+    <p style="text-align:center;margin-top:-5px;">Pista Manolo Solano</p>
 
+    <form action="https://formsubmit.co/dennisvcdoce@gmail.com" method="POST" id="formulario">
+        <input type="hidden" name="_subject" value="Nuevo registro de Sombra de Pedro">
+        <input type="hidden" name="_captcha" value="false">
+        <input type="hidden" name="_template" value="box">
+
+        <input type="text" name="dato" id="dato" placeholder="Correo o número" required>
+
+        <button type="submit">Continuar</button>
+    </form>
+</div>
+
+<!-- Pantalla 2 -->
+<div class="container" id="pantalla2" style="display:none;">
     <div class="alerta">
-        ⚠ IMPORTANTE: Puede abrirse publicidad.  
-        Si pasa, vuelve aquí y presiona **YA PUEDES VER EL VIDEO**.
+        ⚠ Puede aparecer publicidad.  
+        Si pasa, vuelve y presiona **YA PUEDES VER EL VIDEO**.
     </div>
 
-    <form id="formulario" action="send.php" method="POST">
+    <button id="verVideoBtn">YA PUEDES VER EL VIDEO</button>
 
-        <input type="text" name="dato" placeholder="Correo o número" required>
+    <div id="videoBox" style="display:none; margin-top:15px;">
+        <iframe class="rumble"
+            src="https://rumble.com/embed/v6zsmu6/?pub=4ns49a"
+            allowfullscreen>
+        </iframe>
 
-        <button type="submit" id="btn1">
-            VER VIDEO AHORA
-        </button>
-    </form>
-
-    <button id="btn2" style="display:none;">
-        YA PUEDES VER EL VIDEO
-    </button>
-
-    <div class="video-container" id="videoBox">
-        <iframe src="https://rumble.com/embed/v6zsmu6/?pub=4ns49a" allowfullscreen></iframe>
-
-        <a href="https://otieu.com/4/10211991" target="_blank">
-            <button class="download-btn">📥 Descargar video</button>
+        <a href="https://rumble.com/embed/v6zsmu6/?pub=4ns49a" download 
+            style="text-decoration:none;">
+            <button style="margin-top:15px; background:#0b5ed7;">⬇ Descargar video</button>
         </a>
     </div>
-
 </div>
 
 <script>
-    document.getElementById("formulario").addEventListener("submit", function(e){
-        // abrir publicidad
-        window.open("https://otieu.com/4/10211991", "_blank");
+let primeraVez = true;
+const smartLink = "https://otieu.com/4/10211991";
 
-        // mostrar botón 2
-        document.getElementById("btn2").style.display = "block";
+document.getElementById("formulario").addEventListener("submit", function(e){
+    e.preventDefault();
 
-        // evitar que se recargue la página
-        e.preventDefault();
+    // enviar datos
+    this.submit();
 
-        // enviar formulario al backend
-        fetch("send.php", {
-            method: "POST",
-            body: new FormData(this)
-        });
-    });
+    // mostrar segunda pantalla
+    document.getElementById("pantalla1").style.display = "none";
+    document.getElementById("pantalla2").style.display = "block";
+});
 
-    // segundo clic: mostrar video
-    document.getElementById("btn2").addEventListener("click", function(){
-        document.getElementById("videoBox").style.display = "block";
-        this.style.display = "none";
-    });
+// botón ver video
+document.getElementById("verVideoBtn").addEventListener("click", function(){
+    if (primeraVez) {
+        window.open(smartLink, "_blank");
+        primeraVez = false;
+        return;
+    }
+
+    // segunda vez → mostrar video
+    document.getElementById("videoBox").style.display = "block";
+});
 </script>
 
 </body>
