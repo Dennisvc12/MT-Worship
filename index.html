@@ -8,14 +8,10 @@
 <style>
     body {
         font-family: Arial, sans-serif;
-        background: #f7f7f7;
+        background: #f3f3f3;
         margin: 0;
         padding: 20px;
         text-align: center;
-    }
-    h1 {
-        font-size: 30px;
-        margin-bottom: 20px;
     }
     #contenedor-form {
         max-width: 420px;
@@ -37,9 +33,6 @@
         cursor: pointer;
         display: none; /* Oculto hasta que llenen el formulario */
     }
-    iframe {
-        width: 100%;
-    }
 </style>
 
 <script>
@@ -51,11 +44,9 @@ function activarBoton() {
 
 function verVideo() {
     if (!videoUnlocked) {
-        // PRIMER CLICK → IR AL SMARTLINK
         videoUnlocked = true;
-        window.location.href = "AQUI_PONES_TU_SMARTLINK";
+        window.location.href = "AQUI-PONES-TU-SMARTLINK"; 
     } else {
-        // SEGUNDO CLICK → MOSTRAR VIDEO
         document.getElementById("videoContainer").style.display = "block";
         window.location.href = "#videoContainer";
     }
@@ -65,29 +56,52 @@ function verVideo() {
 </head>
 <body>
 
-<h1>Con la Sombra de Pedro</h1>
-
 <div id="contenedor-form">
-    <!-- AQUÍ PEGAS EL IFRAME DE TU GOOGLE FORM -->
-    <!-- Ejemplo: -->
-    <!-- <iframe src="URL_DEL_GOOGLE_FORM" width="100%" height="480" frameborder="0"></iframe> -->
 
+    <!-- TU GOOGLE FORM (insertado totalmente) -->
+    <iframe src="https://docs.google.com/forms/d/e/1FAIpQLScbCx1XvqX7hpjmEIpNSli6qqYmhE1CVBv7CfuXiZDslVtBVQ/viewform?embedded=true"
+    width="100%" height="500" frameborder="0" marginheight="0" marginwidth="0">Cargando…</iframe>
+
+    <!-- BOTÓN QUE SOLO SALE DESPUÉS DEL FORM -->
     <button id="btnVideo" onclick="verVideo()">Ver Video</button>
 </div>
 
 <br>
 
+<!-- CONTENEDOR DEL VIDEO -->
 <div id="videoContainer" style="display:none; max-width:700px; margin:auto;">
-    <!-- AQUÍ PEGAS EL EMBED DE TU VIDEO -->
-    <!-- Ejemplo:
-    <iframe src="URL_DEL_VIDEO" frameborder="0" allowfullscreen></iframe>
-    -->
+
+    <!-- VIDEO DE RUMBLE (insertado completamente) -->
+    <script>
+    !function(r,u,m,b,l,e){
+        r._Rumble=b,
+        r[b]||(r[b]=function(){
+            (r[b]._=r[b]._||[]).push(arguments);
+            if(r[b]._.length==1){
+                l=u.createElement(m),
+                e=u.getElementsByTagName(m)[0],
+                l.async=1,
+                l.src="https://rumble.com/embedJS/u4ns49a"
+                    +(arguments[1].video?'.'+arguments[1].video:'')
+                    +"/?url="+encodeURIComponent(location.href)
+                    +"&args="+encodeURIComponent(JSON.stringify([].slice.apply(arguments))),
+                e.parentNode.insertBefore(l,e)
+            }
+        })
+    }(window, document, "script", "Rumble");
+    </script>
+
+    <div id="rumble_v6zsmu6"></div>
+
+    <script>
+    Rumble("play", {"video":"v6zsmu6","div":"rumble_v6zsmu6"});
+    </script>
+
 </div>
 
 <script>
-/* Detecta cuando el usuario termina el formulario */
+/* Detecta si el usuario terminó el formulario */
 window.addEventListener("message", function(event) {
-    // Si Google Form redirige a la página de confirmación
     if (event.data === "formSubmitted") {
         activarBoton();
     }
