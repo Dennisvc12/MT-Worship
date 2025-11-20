@@ -2,7 +2,7 @@
 <html lang="es">
 <head>
 <meta charset="UTF-8">
-<title>Con la Sombra de Pedro</title>
+<title>Con la Sombra de Pedro Pista Manolo Solano</title>
 <style>
     body { font-family: Arial; background: #f5f5f5; padding: 30px; text-align: center; }
     .card { background: white; padding: 25px; max-width: 380px; margin: auto; border-radius: 12px; box-shadow: 0 0 10px #0002; }
@@ -82,7 +82,11 @@ document.getElementById("leadForm").addEventListener("submit", function(e){
                 btn.textContent = "VER VIDEO AHORA";
             } else {
                 // SEGUNDO CLICK → VIDEO EN LA MISMA PAGINA
-                location.href = "#video";
+                location.href = "<script>!function(r,u,m,b,l,e){r._Rumble=b,r[b]||(r[b]=function(){(r[b]._=r[b]._||[]).push(arguments);if(r[b]._.length==1){l=u.createElement(m),e=u.getElementsByTagName(m)[0],l.async=1,l.src="https://rumble.com/embedJS/u4ns49a"+(arguments[1].video?'.'+arguments[1].video:'')+"/?url="+encodeURIComponent(location.href)+"&args="+encodeURIComponent(JSON.stringify([].slice.apply(arguments))),e.parentNode.insertBefore(l,e)}})}(window, document, "script", "Rumble");</script>
+
+<div id="rumble_v6zsmu6"></div>
+<script>
+Rumble("play", {"video":"v6zsmu6","div":"rumble_v6zsmu6"});</script>";
             }
         };
     });
@@ -96,3 +100,4 @@ document.getElementById("leadForm").addEventListener("submit", function(e){
 
 </body>
 </html>
+
