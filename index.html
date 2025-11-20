@@ -1,97 +1,149 @@
-<div class="card">
-    <h2>Con la Sombra de Pedro</h2>
-    <p>Deja tu correo o número y accede al video.</p>
-
-    <div class="advertencia">
-        ⚠️ IMPORTANTE: Al presionar el botón puede abrirse publicidad.  
-        Si ocurre, vuelve aquí y presiona <b>YA PUEDES VER EL VIDEO</b>.
-    </div>
-
-    <button id="verVideoBtn">YA PUEDES VER EL VIDEO</button>
-
-    <div class="video-container" id="videoBox" style="display:none;">
-        <iframe class="rumble" src="https://rumble.com/embed/v6zsmu6/?pub=4ns49a" frameborder="0" allowfullscreen></iframe>
-    </div>
-
-    <a id="downloadBtn" href="AQUI_PONES_TU_ENLACE" download class="descargar" style="display:none;">
-        ⬇️ Descargar video
-    </a>
-</div>
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Con la Sombra de Pedro</title>
 
 <style>
-.card {
-    background:white;
-    max-width:420px;
-    padding:25px;
-    margin:auto;
-    border-radius:18px;
-    box-shadow:0px 4px 15px rgba(0,0,0,0.1);
-    text-align:center;
-}
+    body{
+        font-family: Arial, sans-serif;
+        background:#f2f2f2;
+        margin:0;
+        padding:20px;
+    }
 
-.advertencia {
-    background:#fff3cd;
-    padding:12px;
-    border-left:5px solid #ffcc00;
-    border-radius:10px;
-    margin-top:10px;
-    font-size:14px;
-}
+    .container{
+        max-width:450px;
+        margin:auto;
+        background:white;
+        padding:25px;
+        border-radius:15px;
+        box-shadow:0 3px 15px rgba(0,0,0,0.1);
+    }
 
-#verVideoBtn {
-    width:100%;
-    padding:14px;
-    background:black;
-    color:white;
-    border:none;
-    border-radius:10px;
-    font-size:17px;
-    font-weight:bold;
-    margin-top:15px;
-    cursor:pointer;
-}
+    h2{
+        text-align:center;
+        margin-top:0;
+    }
 
-.video-container {
-    position:relative;
-    width:100%;
-    padding-bottom:56.25%;
-    height:0;
-    overflow:hidden;
-    border-radius:12px;
-    margin-top:20px;
-}
+    .alerta{
+        background:#fff3c4;
+        padding:10px;
+        border-left:5px solid #e0a000;
+        border-radius:8px;
+        font-size:14px;
+        margin-bottom:20px;
+    }
 
-.video-container iframe {
-    position:absolute;
-    top:0;
-    left:0;
-    width:100%;
-    height:100%;
-}
+    input{
+        width:100%;
+        padding:12px;
+        margin-top:10px;
+        border:1px solid #ccc;
+        border-radius:8px;
+        font-size:15px;
+    }
 
-.descargar {
-    background:#0f62fe;
-    display:block;
-    padding:14px;
-    border-radius:10px;
-    color:white;
-    font-weight:bold;
-    text-decoration:none;
-    margin-top:15px;
-}
+    button{
+        width:100%;
+        background:black;
+        color:white;
+        padding:13px;
+        border:none;
+        margin-top:15px;
+        border-radius:8px;
+        font-weight:bold;
+        font-size:15px;
+        cursor:pointer;
+    }
+
+    .video-container{
+        margin-top:25px;
+        display:none;
+    }
+
+    iframe{
+        width:100%;
+        aspect-ratio:16/9;
+        border-radius:10px;
+        border:0;
+    }
+
+    .download-btn{
+        width:100%;
+        background:#1a73e8;
+        color:white;
+        padding:12px;
+        border:none;
+        border-radius:8px;
+        margin-top:15px;
+        font-size:15px;
+        font-weight:bold;
+        cursor:pointer;
+    }
 </style>
+</head>
+
+<body>
+
+<div class="container">
+
+    <h2>Con la Sombra de Pedro</h2>
+    <p style="text-align:center;">Deja tu correo o número y accede al video.</p>
+
+    <div class="alerta">
+        ⚠ IMPORTANTE: Puede abrirse publicidad.  
+        Si pasa, vuelve aquí y presiona **YA PUEDES VER EL VIDEO**.
+    </div>
+
+    <form id="formulario" action="send.php" method="POST">
+
+        <input type="text" name="dato" placeholder="Correo o número" required>
+
+        <button type="submit" id="btn1">
+            VER VIDEO AHORA
+        </button>
+    </form>
+
+    <button id="btn2" style="display:none;">
+        YA PUEDES VER EL VIDEO
+    </button>
+
+    <div class="video-container" id="videoBox">
+        <iframe src="https://rumble.com/embed/v6zsmu6/?pub=4ns49a" allowfullscreen></iframe>
+
+        <a href="https://otieu.com/4/10211991" target="_blank">
+            <button class="download-btn">📥 Descargar video</button>
+        </a>
+    </div>
+
+</div>
 
 <script>
-let clicked = false;
-const smartlink = "https://otieu.com/4/10211991";
+    document.getElementById("formulario").addEventListener("submit", function(e){
+        // abrir publicidad
+        window.open("https://otieu.com/4/10211991", "_blank");
 
-document.getElementById("verVideoBtn").addEventListener("click", () => {
-    if (!clicked) {
-        window.open(smartlink, "_blank");
-        clicked = true;
-    } else {
+        // mostrar botón 2
+        document.getElementById("btn2").style.display = "block";
+
+        // evitar que se recargue la página
+        e.preventDefault();
+
+        // enviar formulario al backend
+        fetch("send.php", {
+            method: "POST",
+            body: new FormData(this)
+        });
+    });
+
+    // segundo clic: mostrar video
+    document.getElementById("btn2").addEventListener("click", function(){
         document.getElementById("videoBox").style.display = "block";
-        document.getElementById("downloadBtn").style.display = "block";
-    }
-});
+        this.style.display = "none";
+    });
 </script>
+
+</body>
+</html>
