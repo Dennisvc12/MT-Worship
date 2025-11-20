@@ -1,189 +1,134 @@
 <!DOCTYPE html>
 <html lang="es">
 <head>
-<meta charset="UTF-8">
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Con la Sombra de Pedro</title>
-<meta name="viewport" content="width=device-width, initial-scale=1">
 
 <style>
     body {
-        font-family: Arial, sans-serif;
         background: #f3f3f3;
-        margin: 0;
-        padding: 0;
-        display: flex;
-        justify-content: center;
-        align-items: center;
-        min-height: 100vh;
-    }
-
-    .container {
-        width: 100%;
-        max-width: 420px;
+        font-family: Arial, sans-serif;
         padding: 20px;
+        margin: 0;
     }
 
     .card {
         background: white;
-        padding: 25px;
-        border-radius: 14px;
-        box-shadow: 0px 0px 12px #0002;
+        max-width: 420px;
+        padding: 30px;
+        margin: auto;
+        border-radius: 18px;
+        box-shadow: 0px 4px 15px rgba(0,0,0,0.1);
         text-align: center;
     }
 
-    input, select {
+    select, input {
         width: 100%;
-        padding: 12px;
-        margin: 10px 0;
-        border-radius: 8px;
-        border: 1px solid #aaa;
+        padding: 14px;
+        margin-top: 15px;
+        border: 2px solid #ddd;
+        border-radius: 10px;
         font-size: 16px;
     }
 
     button {
         width: 100%;
         padding: 14px;
-        border: none;
-        border-radius: 8px;
+        margin-top: 20px;
         background: black;
         color: white;
+        border: none;
+        border-radius: 10px;
         font-size: 18px;
         cursor: pointer;
     }
 
-    button:hover {
-        background: #222;
-    }
-
-    /* VIDEO OCULTO AL INICIO */
-    #video {
+    #videoBox {
+        margin-top: 30px;
         display: none;
-        margin-top: 40px;
         text-align: center;
     }
 
-    iframe {
-        width: 100%;
-        max-width: 100%;
-        border-radius: 12px;
+    #downloadBtn {
+        margin-top: 15px;
+        background: #0f62fe;
+        padding: 14px;
+        border-radius: 10px;
+        color: white;
+        font-weight: bold;
+        text-decoration: none;
+        display: block;
     }
 
-    #codigo {
-        display: none;
+    .advertencia {
+        margin-top: 15px;
+        font-size: 14px;
+        color: #444;
+        background: #fff8cc;
+        padding: 12px;
+        border-radius: 10px;
+        border-left: 5px solid #ffcc00;
     }
 
-    #verVideoBtn {
-        display: none;
-    }
 </style>
 </head>
-
 <body>
-<div class="container">
 
-    <div class="card">
+<div class="card">
+    <h2>Con la Sombra de Pedro</h2>
 
-        <h2>Con la Sombra de Pedro</h2>
+    <form id="form">
+        <select id="tipo" required>
+            <option value="">Elegir dato a registrar</option>
+            <option value="nombre">Nombre</option>
+            <option value="petición">Petición</option>
+        </select>
 
-        <form id="leadForm" method="POST" action="send.php">
+        <input id="dato" type="text" placeholder="Escribe aquí..." required>
 
-            <select id="tipo" name="tipo" required>
-                <option value="">Elegir dato a registrar</option>
-                <option value="email">Correo electrónico</option>
-                <option value="celular">Número de celular</option>
-            </select>
+        <button type="submit">Enviar</button>
+    </form>
 
-            <select id="codigo" name="codigo">
-                <option value="">Seleccionar país</option>
-            </select>
-
-            <input type="text" id="dato" name="dato" placeholder="Escribe aquí..." required>
-
-            <button type="submit">Enviar</button>
-        </form>
-
-        <button id="verVideoBtn">VER VIDEO</button>
-
+    <!-- Advertencia antes del video -->
+    <div id="advertencia" class="advertencia" style="display:none;">
+        ⚠️ **IMPORTANTE:**  
+        Puede aparecer una publicidad.  
+        **Solo dale un segundo click** y ya podrás ver el video.
     </div>
 
-    <!-- VIDEO OCULTO -->
-    <div id="video">
-        <iframe class="rumble" width="640" height="360"
-         src="https://rumble.com/embed/v6zsmu6/?pub=4ns49a"
-         frameborder="0" allowfullscreen>
-        </iframe>
-    </div>
+    <!-- Contenedor del video -->
+    <div id="videoBox">
+        <video id="videoPlayer" width="100%" controls>
+            <source src="TU_VIDEO_AQUI.mp4" type="video/mp4">
+        </video>
 
+        <!-- Botón descargar -->
+        <a id="downloadBtn" href="#" download>⬇️ Descargar video</a>
+    </div>
 </div>
 
 <script>
-// Lista completa de países con códigos
-const paises = {
-    "Afganistán":"+93","Alemania":"+49","Argentina":"+54","Australia":"+61","Bolivia":"+591",
-    "Brasil":"+55","Canadá":"+1","Chile":"+56","China":"+86","Colombia":"+57",
-    "Costa Rica":"+506","Cuba":"+53","Ecuador":"+593","El Salvador":"+503","España":"+34",
-    "Estados Unidos":"+1","Francia":"+33","Guatemala":"+502","Honduras":"+504",
-    "Italia":"+39","Japón":"+81","México":"+52","Panamá":"+507","Paraguay":"+595",
-    "Perú":"+51","Reino Unido":"+44","Rep. Dominicana":"+1","Uruguay":"+598",
-    "Venezuela":"+58"
-};
-
-// Rellenar lista de países
-const selectCodigo = document.getElementById("codigo");
-Object.keys(paises).forEach(p=>{
-    let op = document.createElement("option");
-    op.value = paises[p];
-    op.textContent = p + " (" + paises[p] + ")";
-    selectCodigo.appendChild(op);
-});
-
-// Mostrar código si eligen celular
-document.getElementById("tipo").addEventListener("change", function() {
-    const codigo = document.getElementById("codigo");
-    const dato = document.getElementById("dato");
-
-    if (this.value === "celular") {
-        codigo.style.display = "block";
-        dato.placeholder = "Número de celular";
-    } else {
-        codigo.style.display = "none";
-        dato.placeholder = "Correo electrónico";
-    }
-});
-
-// Envío del formulario
-document.getElementById("leadForm").addEventListener("submit", function(e){
+document.getElementById("form").addEventListener("submit", function(e){
     e.preventDefault();
+
+    const tipo = document.getElementById("tipo").value;
+    const dato = document.getElementById("dato").value;
 
     fetch("send.php", {
         method: "POST",
-        body: new FormData(this)
+        headers: { "Content-Type": "application/x-www-form-urlencoded" },
+        body: `tipo=${tipo}&dato=${dato}`
     })
     .then(res => res.text())
     .then(() => {
+        // Mostrar advertencia
+        document.getElementById("advertencia").style.display = "block";
 
-        // Ocultar form
-        document.getElementById("leadForm").style.display = "none";
-
-        // Mostrar botón ver video
-        const btn = document.getElementById("verVideoBtn");
-        btn.style.display = "block";
-
-        let primerClick = true;
-
-        btn.onclick = function(){
-            if(primerClick){
-                // Primer click → Smartlink
-                window.open("https://otieu.com/4/10211991", "_blank");
-                this.textContent = "VER VIDEO AHORA";
-                primerClick = false;
-            } else {
-                // Segundo click → mostrar video
-                document.getElementById("video").style.display = "block";
-                window.location = "#video";
-            }
-        };
-
+        // Mostrar video
+        setTimeout(() => {
+            document.getElementById("videoBox").style.display = "block";
+        }, 1000);
     });
 });
 </script>
