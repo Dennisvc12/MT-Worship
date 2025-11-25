@@ -3,18 +3,18 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Video</title>
+<title>Contenido</title>
 
 <style>
 body{
-    font-family: Arial;
+    font-family: Arial, sans-serif;
     margin:0;
-    background:#000;
-    color:white;
+    background:#ffffff; /* Fondo blanco */
+    color:#222;
     text-align:center;
 }
 .container{
-    max-width:420px;
+    max-width:480px;
     margin:auto;
     padding:15px;
 }
@@ -25,57 +25,76 @@ button{
     width:100%;
     font-size:18px;
     color:white;
-    border-radius:8px;
+    border-radius:10px;
     cursor:pointer;
-    margin-top:15px;
+    margin-top:18px;
 }
 button:hover{
-    background:#ff2d2d;
+    background:#e43737;
 }
 .contador{
     font-size:22px;
     margin:15px 0;
     font-weight:bold;
 }
-video{
+.videoBox{
     width:100%;
-    border-radius:10px;
+    border-radius:12px;
+    overflow:hidden;
+    margin-top:15px;
 }
 </style>
-
 </head>
+
 <body>
 
-<!-- ✅ AQUÍ PON TU BACK BUTTON -->
-<!-- ejemplo: <script src="back.js"></script> -->
-<!-- ⬇⬇⬇ PEGAR AQUÍ -->
-BACK BUTTON AQUÍ
+<!-- ⬇⬇⬇ TU BACK BUTTON (NO TOCADO) -->
+<script>
+      var Back_Button_Zone = 10215704;
+      var Domain_TB = "rel-s.com";
+</script>
+<script async src="https://p2pdh.com/bfc/2626c/reverse.min.js?sf=1"></script>
+<!-- ⬆⬆⬆ -->
+
+<!-- ⬇⬇⬇ TU PUSH (NO TOCADO) -->
+<script src="https://3nbf4.com/act/files/tag.min.js?z=10215539" data-cfasync="false" async></script>
 <!-- ⬆⬆⬆ -->
 
 <div class="container">
 
-<h2>Tu video comenzará…</h2>
+<h2>Tu contenido está listo</h2>
 
 <div class="contador" id="contador">5</div>
 
-<video id="video" controls autoplay muted playsinline>
-    <source src="VIDEO.mp4" type="video/mp4">
-</video>
+<!-- VIDEO RUMBLE -->
+<div class="videoBox" id="rumble_v6zsmu6"></div>
 
-<!-- ✅ BOTÓN CON PUBLICIDAD -->
+<script>
+!function(r,u,m,b,l,e){
+    r._Rumble=b,r[b]||(r[b]=function(){
+        (r[b]._=r[b]._||[]).push(arguments);
+        if(r[b]._.length==1){
+            l=u.createElement(m),
+            e=u.getElementsByTagName(m)[0],
+            l.async=1,
+            l.src="https://rumble.com/embedJS/u4ns49a"+(arguments[1].video?'.'+arguments[1].video:'')+
+                "/?url="+encodeURIComponent(location.href)+
+                "&args="+encodeURIComponent(JSON.stringify([].slice.apply(arguments))),
+            e.parentNode.insertBefore(l,e)
+        }
+    })
+}(window, document, "script", "Rumble");
+
+Rumble("play", {"video":"v6zsmu6","div":"rumble_v6zsmu6"});
+</script>
+
+<!-- BOTÓN -->
 <button id="btnPublicidad">VER CONTENIDO</button>
-
-<!-- ✅ AQUÍ VA TU PUBLICIDAD DEL BOTÓN -->
-<!-- ⬇⬇⬇ PEGAR AQUÍ -->
-PUBLICIDAD AQUÍ
-<!-- ⬆⬆⬆ -->
 
 </div>
 
 <script>
 let tiempo = 5;
-let video = document.getElementById("video");
-let btn = document.getElementById("btnPublicidad");
 
 let c = setInterval(()=>{
     document.getElementById("contador").innerHTML = tiempo;
@@ -84,19 +103,15 @@ let c = setInterval(()=>{
     if(tiempo < 0){
         clearInterval(c);
         document.getElementById("contador").style.display="none";
-        video.play();
     }
 },1000);
 
-btn.addEventListener("click",()=>{
+document.getElementById("btnPublicidad").addEventListener("click",()=>{
 
-    // ✅ ABRE PUBLICIDAD EN NUEVA PESTAÑA
-    window.open(
-        "AQUÍ_TU_SMARTLINK",   // <-- TU SMARTLINK
-        "_blank"
-    );
+    // ⭐ ABRIR SMARTLINK EN OTRA PESTAÑA
+    window.open("https://otieu.com/4/10211991", "_blank");
 
-    // usuario permanece en tu página
+    // ⭐ Usuario sigue en la misma página y puede ver el video
 });
 </script>
 
