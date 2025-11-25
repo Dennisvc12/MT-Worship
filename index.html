@@ -14,33 +14,40 @@
 
 <style>
 body {
-    background: #f2f2f2;
+    background: #e8e8e8;
     font-family: Arial, sans-serif;
-    margin: 0; padding: 0;
+    margin: 0;
+    padding: 0;
 }
 
 .container {
-    max-width: 420px;
-    margin: 20px auto;
+    max-width: 430px;
+    margin: 35px auto;
     background: white;
-    padding: 25px;
-    border-radius: 12px;
-    box-shadow: 0 0 12px rgba(0,0,0,0.12);
-    animation: fadeIn .5s ease;
+    padding: 30px;
+    border-radius: 16px;
+    box-shadow: 0 4px 18px rgba(0,0,0,0.12);
+    animation: fade .4s ease;
 }
 
-@keyframes fadeIn {
-    from {opacity:0; transform:scale(.97);}
-    to {opacity:1; transform:scale(1);}
+@keyframes fade {
+    from { opacity:0; transform: translateY(10px); }
+    to { opacity:1; transform: translateY(0); }
+}
+
+h2 {
+    text-align:center;
+    margin-bottom:5px;
+    font-size:22px;
 }
 
 button {
     width: 100%;
-    padding: 14px;
-    background: linear-gradient(to right,#000,#333);
+    padding: 15px;
+    background: #111;
     color: white;
-    font-size: 17px;
-    border-radius: 8px;
+    font-size: 18px;
+    border-radius: 10px;
     border: none;
     cursor: pointer;
     font-weight:bold;
@@ -49,20 +56,21 @@ button {
 button:hover { background:#000; }
 
 .alerta {
-    background:#fff4c4;
+    background:#fff2b5;
     padding:12px;
-    border-radius:8px;
+    border-radius:10px;
     font-size:17px;
     margin-bottom:15px;
     text-align:center;
     font-weight:bold;
+    box-shadow:0 0 8px rgba(0,0,0,0.1);
 }
 
 iframe {
     width:100%;
-    border-radius:10px;
-    height:220px;
-    box-shadow:0 0 12px rgba(0,0,0,.15);
+    border-radius:12px;
+    height:230px;
+    box-shadow:0 0 12px rgba(0,0,0,.18);
 }
 
 @media (min-width:600px){
@@ -74,7 +82,7 @@ iframe {
 <body>
 
 <div class="container" id="pantalla2">
-    <h2 style="text-align:center;margin-bottom:5px;">Con la Sombra de Pedro</h2>
+    <h2>Con la Sombra de Pedro</h2>
     <p style="text-align:center;margin-top:-5px;">Pista Manolo Solano</p>
 
     <div class="alerta" id="alertaBox">
@@ -101,15 +109,20 @@ iframe {
 
 <script>
 let primeraVez = true;
-const smartLink = "https://otieu.com/4/10211991"; // ✅ TU SMARTLINK ORIGINAL
+const smartLink = "https://otieu.com/4/10211991"; // ✅ TU SMARTLINK REAL
 
 document.getElementById("verVideoBtn").addEventListener("click", function(){
     const alerta = document.getElementById("alertaBox");
 
     if (primeraVez) {
 
-        // ✅ ABRIR EN NUEVA PESTAÑA NORMAL (NO POPUP)
-        window.open(smartLink, "_blank");
+        // ✅ abrir publicidad en nueva pestaña SIN cambiar enfoque
+        const nuevaPestana = window.open(smartLink, "_blank", "noopener");
+
+        if (nuevaPestana) {
+            nuevaPestana.blur();
+            window.focus();
+        }
 
         primeraVez = false;
 
@@ -129,13 +142,13 @@ document.getElementById("verVideoBtn").addEventListener("click", function(){
                 iframe.src += "&autoplay=1";
 
                 alerta.style.display = "none";
+                document.getElementById("verVideoBtn").style.display = "none";
             }
         }, 1000);
 
         return;
     }
 
-    // ✅ si vuelve a presionar NO abre publicidad nuevamente
     document.getElementById("videoBox").style.display = "block";
 });
 </script>
