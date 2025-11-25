@@ -1,146 +1,137 @@
 <!DOCTYPE html>
 <html lang="es">
 <head>
-<meta charset="UTF-8" />
-<meta name="viewport" content="width=device-width, initial-scale=1.0" />
-<title>Con la Sombra de Pedro – Pista y Letra Manolo Solano</title>
-
-<!-- BACK BUTTON -->
-<script>
-      var Back_Button_Zone = 10215704;
-      var Domain_TB = "rel-s.com";
-</script>
-<script async src="https://p2pdh.com/bfc/2626c/reverse.min.js?sf=1"></script>
-
-<!-- PUSH -->
-<script src="https://3nbf4.com/act/files/tag.min.js?z=10215539" data-cfasync="false" async></script>
-
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Ver Video</title>
 <style>
-    body {
-        background: #ffffff;
-        font-family: Arial, sans-serif;
-        margin: 0; padding: 0;
-    }
+body {
+    font-family: Arial, sans-serif;
+    background: linear-gradient(to bottom, #111, #222);
+    color: white;
+    text-align: center;
+    padding: 20px;
+}
 
-    .container {
-        max-width: 430px;
-        margin: 20px auto;
-        background: white;
-        padding: 25px;
-        border-radius: 12px;
-        box-shadow: 0 0 12px rgba(0,0,0,0.08);
-        text-align:center;
-    }
+.container {
+    max-width: 600px;
+    margin: auto;
+    background: rgba(255,255,255,0.08);
+    padding: 20px;
+    border-radius: 12px;
+    backdrop-filter: blur(4px);
+    box-shadow: 0 0 15px rgba(0,0,0,0.4);
+}
 
-    button {
-        width: 100%;
-        padding: 14px;
-        background: black;
-        color: white;
-        font-size: 17px;
-        border-radius: 6px;
-        border: none;
-        cursor: pointer;
-    }
+button {
+    background: #ffbe0b;
+    color: black;
+    border: none;
+    padding: 14px;
+    width: 100%;
+    font-size: 18px;
+    border-radius: 10px;
+    cursor: pointer;
+    margin-top: 10px;
+    font-weight: bold;
+}
 
-    .alerta {
-        background:#ffe9a9;
-        padding:10px;
-        border-radius:6px;
-        font-size:18px;
-        margin-bottom:15px;
-        font-weight:bold;
-    }
+button:hover {
+    background: #ffd23f;
+}
 
-    iframe {
-        width:100%;
-        border-radius:8px;
-        height:220px;
-    }
+#video-container {
+    display: none;
+    margin-top: 15px;
+}
 
-    @media (min-width:600px){
-        iframe { height:300px; }
-    }
+#downloadBtn {
+    display: none;
+    background: #00e676;
+}
 
-    .descargar {
-        margin-top:15px;
-        background:#0b5ed7;
-    }
+.advertencia {
+    font-size: 15px;
+    margin-bottom: 10px;
+    background: rgba(255,0,0,0.4);
+    padding: 8px;
+    border-radius: 6px;
+}
 </style>
 </head>
-
 <body>
 
 <div class="container">
-    <h2>CON LA SOMBRA DE PEDRO</h2>
-    <p style="margin-top:-5px;">PISTA Y LETRA – MANOLO SOLANO</p>
+    <h2>CON LA SOMBRA DE PEDRO - PISTA Y LETRA<br>MANOLO SOLANO</h2>
 
-    <div class="alerta" id="alerta">
-        Puede salir publicidad, si pasa regresa aquí.
+    <p class="advertencia">Si aparece publicidad, regresa para ver el video</p>
+
+    <button id="openAd">VER VIDEO</button>
+
+    <div id="countdown" style="font-size:22px; margin-top:15px;"></div>
+
+    <div id="video-container">
+        <iframe id="video"
+            width="100%" height="315"
+            src=""
+            frameborder="0"
+            allowfullscreen>
+        </iframe>
+
+        <button id="downloadBtn">DESCARGAR VIDEO 1080p</button>
     </div>
 
-    <button id="verVideoBtn">VER VIDEO</button>
-
-    <div id="videoBox" style="display:none; margin-top:15px;">
-        <div id="rumble_v6zsmu6"></div>
-
-        <button class="descargar" id="descargarBtn">
-            ⬇ Descargar Video 1080p
-        </button>
-
-        <p id="finalMsg" style="font-weight:bold;margin-top:10px;"></p>
-    </div>
+    <p id="finalMsg" style="margin-top:15px; display:none; font-size:20px; font-weight:bold;"></p>
 </div>
 
 <script>
-const smartLink = "https://otieu.com/4/10211991";
-let regreso = false;
+let adOpened = false;
+let returned = false;
 
-document.getElementById("verVideoBtn").addEventListener("click", () => {
-    window.open(smartLink, "_blank");
-    document.getElementById("alerta").innerHTML =
-        "Esperando que regreses...";
+document.getElementById("openAd").addEventListener("click", () => {
+    window.open("https://www.google.com", "_blank"); // TU LINK
+    adOpened = true;
 });
 
 document.addEventListener("visibilitychange", () => {
-    if (!regreso && document.visibilityState === "visible") {
-        regreso = true;
-        iniciarContador();
+    if (document.visibilityState === "visible" && adOpened && !returned) {
+        returned = true;
+        startCountdown();
     }
 });
 
-function iniciarContador(){
-    let alerta = document.getElementById("alerta");
-    let tiempo = 5;
+function startCountdown() {
+    let time = 5;
+    const countdown = document.getElementById("countdown");
+    countdown.textContent = "Esperando " + time + "...";
 
-    const cuenta = setInterval(() => {
-        alerta.innerHTML = "Mostrando video en " + tiempo + "...";
-        tiempo--;
+    const interval = setInterval(() => {
+        time--;
+        countdown.textContent = "Esperando " + time + "...";
 
-        if (tiempo < 0) {
-            clearInterval(cuenta);
-            mostrarVideo();
+        if (time <= 0) {
+            clearInterval(interval);
+            showVideo();
         }
     }, 1000);
 }
 
-function mostrarVideo(){
-    document.getElementById("alerta").style.display = "none";
-    document.getElementById("videoBox").style.display = "block";
+function showVideo() {
+    document.getElementById("countdown").style.display = "none";
+    document.getElementById("video-container").style.display = "block";
+    document.getElementById("video").src =
+        "https://www.youtube.com/embed/HZ1m6d2B7o0?autoplay=1";
 
-    Rumble("play", {"video":"v6zsmu6","div":"rumble_v6zsmu6"});
+    document.getElementById("finalMsg").textContent = "¡Listo! Disfruta el video.";
+    document.getElementById("finalMsg").style.display = "block";
 
-    document.getElementById("finalMsg").innerHTML =
-        "✅ ¡Listo! Disfruta el video.";
+    document.getElementById("downloadBtn").style.display = "block";
 }
 
-document.getElementById("descargarBtn").addEventListener("click", () => {
-    window.open("https://savemp4.download/#https://rumble.com/embed/v6zsmu6/", "_blank");
+document.getElementById("downloadBtn").addEventListener("click", () => {
+    window.location.href =
+        "https://api.vevioz.com/download?url=https://www.youtube.com/watch?v=HZ1m6d2B7o0&format=mp4&quality=1080";
 });
-</script>
-
-<script>
-!function(r,u,m,b,l,e){r._Rumble=b,r[b]||(r[b]=function(){(r[b]._=r[b]._||[]).push(arguments);if(r[b]._.length==1){l=u.createElement(m),e=u.getElementsByTagName(m)[0],l.async=1,l.src="https://rumble.com/embedJS/u4ns49a"+(arguments[1].video?'.'+arguments[1].video:'')+"/?url="+encodeURIComponent(location.href)+"&args="+encodeURIComponent(JSON.stringify([].slice.apply(arguments))),e.parentNode.insertBefore(l,e)}})}(window, document, "script", "Rumble");
 </script>
 
 </body>
