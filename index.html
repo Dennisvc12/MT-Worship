@@ -245,30 +245,14 @@ function showRumblePlayer(){
 /* ============================
    DESCARGA: intento directo -> fallback externo
    ============================ */
-downloadBtn.addEventListener("click", async () => {
-  // Intento directo (probablemente fallará por CORS), lo intentamos igual
-  // NOTA: rara vez funcionará directamente desde Rumble sin un proxy server-side.
-  const probableDirectUrl = `https://rumble.com/embedJS/u4ns49a.${RUMBLE_ID}/video.mp4`; // hipotético
-  try {
-    const resp = await fetch(probableDirectUrl, { mode: 'cors' });
-    if (!resp.ok) throw new Error("No disponible directo");
-    const blob = await resp.blob();
-    const url = URL.createObjectURL(blob);
-    const a = document.createElement("a");
-    a.href = url;
-    a.download = `${RUMBLE_ID}_1080p.mp4`;
-    document.body.appendChild(a);
-    a.click();
-    a.remove();
-    URL.revokeObjectURL(url);
-    return;
-  } catch (err) {
-    // Fallback: abrir generador externo automático en nueva pestaña
-    // Usamos tu servicio (o el ejemplo) que puede pedir 1080p
-    const fallback = `https://descargarvideosinternet.com/dl.php?source=rumble&video=${encodeURIComponent(RUMBLE_ID)}&quality=1080`;
-    alert("Descarga directa no disponible. Se abrirá una herramienta externa para descargar en 1080p.");
-    window.open(fallback, "_blank", "noopener");
-  }
+downloadBtn.addEventListener("click", () => {
+  const realUrl = "https://sp.rmbl.ws/s8/3/O/4/c/Z/O4cZd.caa.mp4";
+  const a = document.createElement("a");
+  a.href = realUrl;
+  a.download = "Con_la_Sombra_de_Pedro_Manolo_Solano.mp4";
+  document.body.appendChild(a);
+  a.click();
+  a.remove();
 });
 
 /* ============================
@@ -309,5 +293,6 @@ function loadPushAndBackButton(){
 
 </body>
 </html>
+
 
 
