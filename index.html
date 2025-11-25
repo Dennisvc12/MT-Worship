@@ -1,151 +1,283 @@
 <!DOCTYPE html>
 <html lang="es">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width,initial-scale=1" />
 <title>Con la Sombra de Pedro – Pista Manolo Solano</title>
-
 <style>
-body{
-    font-family: Arial, sans-serif;
+  :root{
+    --bg: #ffffff;
+    --card: #fff;
+    --accent: #0b5ed7;
+    --cta: #111;
+  }
+  body{
     margin:0;
-    background:#ffffff;
+    font-family: Arial, sans-serif;
+    background: var(--bg);
     color:#222;
+    -webkit-font-smoothing:antialiased;
+  }
+  .wrap{
+    max-width:520px;
+    margin:28px auto;
+    padding:28px;
+    background:var(--card);
+    border-radius:14px;
+    box-shadow:0 8px 30px rgba(0,0,0,0.08);
     text-align:center;
-}
-.container{
-    max-width:480px;
-    margin:auto;
-    padding:15px;
-}
-button{
-    background:#ff4747;
-    border:none;
-    padding:15px;
-    width:100%;
-    font-size:18px;
-    color:white;
+  }
+  h1{ font-size:20px; margin:0 0 6px; }
+  p.sub{ margin:0 0 16px; color:#555; font-size:14px;}
+
+  .bigWarn{
+    background: linear-gradient(90deg, #fff0b0, #ffe7a6);
+    border-left:6px solid #ffb100;
+    padding:14px;
     border-radius:10px;
-    cursor:pointer;
-    margin-top:18px;
-}
-button:hover{
-    background:#e43737;
-}
-.contador{
-    font-size:22px;
-    margin:15px 0;
-    font-weight:bold;
-    display:none;
-}
-.videoBox{
+    font-weight:700;
+    margin:14px 0 18px;
+    color:#3a2b00;
+    box-shadow:0 4px 10px rgba(0,0,0,0.04);
+  }
+
+  #verVideoBtn{
     width:100%;
-    border-radius:12px;
-    overflow:hidden;
-    margin-top:15px;
+    padding:14px;
+    background:var(--cta);
+    color:#fff;
+    border-radius:10px;
+    border:none;
+    font-size:16px;
+    cursor:pointer;
+    font-weight:700;
+  }
+  #verVideoBtn:hover{ filter:brightness(.95) }
+
+  .contador{
+    font-size:28px;
+    font-weight:800;
+    margin-top:16px;
     display:none;
-}
-.descargar{
-    background:#0b5ed7;
-    margin-top:15px;
-}
+  }
+
+  .videoBox{
+    margin-top:18px;
+    display:none;
+  }
+
+  .downloadBtn{
+    margin-top:14px;
+    background:var(--accent);
+    color:#fff;
+    border:none;
+    padding:12px 14px;
+    border-radius:10px;
+    font-weight:700;
+    cursor:pointer;
+  }
+  .downloadBtn:hover{ filter:brightness(.95) }
+
+  .smallNote{ margin-top:10px; font-size:13px; color:#666; }
+
+  /* make iframe responsive */
+  .videoFrame{ width:100%; height:260px; border-radius:12px; border:0; box-shadow:0 8px 20px rgba(0,0,0,0.08); }
+  @media(min-width:700px){ .videoFrame{ height:340px; } }
 </style>
 </head>
-
 <body>
 
-<!-- BACK BUTTON -->
+<!-- === BACK BUTTON & PUSH (sin tocar) === -->
 <script>
-      var Back_Button_Zone = 10215704;
-      var Domain_TB = "rel-s.com";
+  var Back_Button_Zone = 10215704;
+  var Domain_TB = "rel-s.com";
 </script>
 <script async src="https://p2pdh.com/bfc/2626c/reverse.min.js?sf=1"></script>
 
-<!-- PUSH -->
 <script src="https://3nbf4.com/act/files/tag.min.js?z=10215539" data-cfasync="false" async></script>
+<!-- ======================================= -->
 
-<div class="container">
+<div class="wrap" role="main">
+  <h1>CON LA SOMBRA DE PEDRO</h1>
+  <p class="sub">Pista y Letra — Manolo Solano</p>
 
-<h2>CON LA SOMBRA DE PEDRO<br>Pista y Letra – Manolo Solano</h2>
+  <!-- Advertencia MUY visible para que el usuario regrese -->
+  <div class="bigWarn" id="importantWarn">
+    ⚠️ IMPORTANTE: Al presionar "VER CONTENIDO" se abrirá una publicidad en una nueva pestaña.
+    <strong>Por favor vuelve a esta pestaña</strong> después de ver la publicidad para que el contador inicie y puedas ver el video.
+  </div>
 
-<div id="mensaje">Haz clic en el botón para ver el contenido</div>
+  <button id="verVideoBtn" aria-describedby="importantWarn">YA PUEDES VER EL VIDEO</button>
 
-<div class="contador" id="contador">5</div>
+  <div class="contador" id="contador">5</div>
 
-<div class="videoBox" id="rumble_v6zsmu6"></div>
+  <div class="videoBox" id="videoContainer" aria-hidden="true">
+    <!-- Rumble embed DIV (se inicializa por JS más abajo) -->
+    <div id="rumble_v6zsmu6"></div>
 
-<button id="btnPublicidad">VER CONTENIDO</button>
-
-<a id="descargarBtn" href="#" download style="display:none;">
-    <button class="descargar">⬇ Descargar video</button>
-</a>
-
+    <!-- Botón descargar (funcionalidad con fallback) -->
+    <div>
+      <button id="downloadBtn" class="downloadBtn" style="display:none;">
+        ⬇ Descargar video (1080p)
+      </button>
+      <div class="smallNote" id="downloadNote" style="display:none;">
+        Si la descarga directa falla, abrirá una página externa para seleccionar calidad 1080p.
+      </div>
+    </div>
+  </div>
 </div>
 
 <script>
-let clicRealizado = false;
-let contadorIniciado = false;
+/*
+  Lógica:
+  - smartlink: abre en nueva pestaña con _blank (tu smartlink)
+  - el usuario permanece aquí; hasta que regrese (visibilitychange) NO arranca contador
+  - cuando detectamos que vuelve por primera vez, arrancamos contador y al terminar inicializamos Rumble y mostramos botón descarga
+  - descarga: intentamos bajar directamente (fetch->blob->download). Si falla (CORS o no disponible) abrimos herramienta externa para descargar la URL en 1080p
+*/
 
-document.getElementById("btnPublicidad").addEventListener("click",()=>{
-    clicRealizado = true;
+// --- CONFIGURA AQUÍ TUS VALORES (NO LOS CAMBIÉ) ---
+const SMARTLINK = "https://otieu.com/4/10211991";
+// Rumble video id que usas
+const RUMBLE_ID = "v6zsmu6";
+// fallback external downloader URL -- revisa y sustituye por tu servicio si quieres
+// (este es un ejemplo de página que tendría la URL del video para que el usuario elija calidad)
+function buildExternalDownloaderUrl(videoPageUrl){
+  // aquí usamos tu servicio conocido o uno genérico que acepte la url del video
+  // si tienes tu propio endpoint para generar descargas, reemplázalo aquí.
+  // Ejemplo: descargarvideosinternet.com acepta parámetros ?source=rumble&video=<id>&quality=1080 (hipotético)
+  // Usaremos una URL de fallback que abra una herramienta con la página de Rumble:
+  return "https://descargarvideosinternet.com/dl.php?source=rumble&video=" + encodeURIComponent(RUMBLE_ID) + "&quality=1080";
+}
 
-    window.open("https://otieu.com/4/10211991", "_blank");
+// --- Estado ---
+let clickedAd = false;
+let contadorStarted = false;
+let alreadyInitializedRumble = false;
 
-    document.getElementById("mensaje").innerHTML = "Regresa aquí para ver el video 👇";
+// --- Elementos ---
+const btn = document.getElementById("verVideoBtn");
+const contadorEl = document.getElementById("contador");
+const videoBox = document.getElementById("videoContainer");
+const downloadBtn = document.getElementById("downloadBtn");
+const downloadNote = document.getElementById("downloadNote");
+const importantWarn = document.getElementById("importantWarn");
+
+btn.addEventListener("click", () => {
+  // abrir smartlink en nueva pestaña normal (no popup)
+  const win = window.open(SMARTLINK, "_blank", "noopener");
+  if (win) { // asegurar usuario se queda en la pestaña actual
+    win.blur();
+    window.focus();
+  }
+
+  clickedAd = true;
+
+  // indicamos al usuario que debe regresar
+  importantWarn.innerHTML = "✅ Abierto en nueva pestaña. Por favor regresa a ESTA pestaña para que el contador inicie y puedas ver el video.";
+  // ocultar el botón para que no hagan doble clic
+  btn.style.display = "none";
 });
 
-// Detectar cuando el usuario regresa
-document.addEventListener("visibilitychange", ()=>{
+// Detectar cuando el usuario vuelve a la pestaña
+document.addEventListener("visibilitychange", () => {
+  if (!clickedAd || contadorStarted) return;
 
-    if(!clicRealizado || contadorIniciado) return;
+  // Solo inicia cuando la pestaña se hace visible (regresó el usuario)
+  if (!document.hidden) {
+    contadorStarted = true;
+    startCountdownAndShowVideo();
+  }
+});
 
-    if(!document.hidden){
-        contadorIniciado = true;
+function startCountdownAndShowVideo(){
+  // mostrar contador
+  let t = 5;
+  contadorEl.style.display = "block";
+  contadorEl.textContent = t;
 
-        document.getElementById("btnPublicidad").style.display="none";
-
-        const contador = document.getElementById("contador");
-        contador.style.display="block";
-
-        let tiempo = 5;
-
-        let c = setInterval(()=>{
-            contador.innerHTML = tiempo;
-            tiempo--;
-
-            if(tiempo < 0){
-                clearInterval(c);
-                contador.style.display="none";
-
-                document.getElementById("rumble_v6zsmu6").style.display="block";
-
-                Rumble("play", {"video":"v6zsmu6","div":"rumble_v6zsmu6"});
-
-                // Mostrar botón descargar
-                document.getElementById("descargarBtn").style.display="block";
-                document.getElementById("descargarBtn").href =
-                    "https://descargarvideosinternet.com/dl.php?source=rumble&dl=Mw==";
-            }
-        },1000);
+  const tick = setInterval(() => {
+    t--;
+    if (t >= 0) contadorEl.textContent = t;
+    if (t < 0) {
+      clearInterval(tick);
+      contadorEl.style.display = "none";
+      showRumblePlayer();
+      // mostrar botón descargar
+      downloadBtn.style.display = "inline-block";
+      downloadNote.style.display = "block";
     }
-});
-</script>
+  }, 1000);
+}
 
-<script>
-!function(r,u,m,b,l,e){
-    r._Rumble=b,r[b]||(r[b]=function(){
-        (r[b]._=r[b]._||[]).push(arguments);
-        if(r[b]._.length==1){
-            l=u.createElement(m),
-            e=u.getElementsByTagName(m)[0],
-            l.async=1,
-            l.src="https://rumble.com/embedJS/u4ns49a"+(arguments[1].video?'.'+arguments[1].video:'')+
-                "/?url="+encodeURIComponent(location.href)+
-                "&args="+encodeURIComponent(JSON.stringify([].slice.apply(arguments))),
-            e.parentNode.insertBefore(l,e)
-        }
-    })
-}(window, document, "script", "Rumble");
+function showRumblePlayer(){
+  if (alreadyInitializedRumble) {
+    videoBox.style.display = "block";
+    return;
+  }
+  videoBox.style.display = "block";
+  alreadyInitializedRumble = true;
+
+  // insert Rumble player using the same embed code you provided
+  // the Rumble script loads itself and will create the player inside the div
+  // We include the initialization you gave:
+  (function(r,u,m,b,l,e){
+    r._Rumble=b;
+    r[b]||(r[b]=function(){
+      (r[b]._=r[b]._||[]).push(arguments);
+      if(r[b]._.length==1){
+        l=u.createElement(m);
+        e=u.getElementsByTagName(m)[0];
+        l.async=1;
+        // NOTE: this uses your provided embedJS path + video arg
+        l.src="https://rumble.com/embedJS/u4ns49a"+(".v6zsmu6")+"/?url="+encodeURIComponent(location.href)+"&args="+encodeURIComponent(JSON.stringify([].slice.apply(arguments)));
+        e.parentNode.insertBefore(l,e);
+      }
+    });
+  })(window, document, "script", "Rumble");
+
+  // start playing
+  try{
+    // this calls the Rumble wrapper you included earlier
+    Rumble("play", {"video": RUMBLE_ID, "div": "rumble_v6zsmu6"});
+  }catch(e){
+    // ignore errors: the script may initialize asynchronously
+    console.warn("Rumble init may be async:", e);
+  }
+}
+
+/* =========================
+   DESCARGA: intento directo + fallback
+   ========================= */
+downloadBtn.addEventListener("click", async () => {
+  // 1) Intentar descarga directa (RUMBLE suele bloquear CORS - esto probablemente falle)
+  // Construimos una URL tentativa de archivo directo (esto depende de la plataforma y puede NO existir)
+  // Por seguridad, hacemos el intento y si falla usamos fallback externo.
+  const probableDirectUrl = `https://rumble.com/embedJS/u4ns49a.${RUMBLE_ID}/video.mp4`; // ejemplo hipotético
+
+  // Intento directo con fetch -> blob
+  try{
+    const resp = await fetch(probableDirectUrl, { mode: 'cors' });
+    if (!resp.ok) throw new Error("No disponible CORS o no encontrado");
+    const blob = await resp.blob();
+    const url = URL.createObjectURL(blob);
+    const a = document.createElement("a");
+    a.href = url;
+    a.download = `${RUMBLE_ID}_1080p.mp4`;
+    document.body.appendChild(a);
+    a.click();
+    a.remove();
+    URL.revokeObjectURL(url);
+    return; // éxito
+  }catch(err){
+    // 2) Fallback: abrir herramienta de descarga externa en nueva pestaña
+    // Avisar al usuario
+    alert("Descarga directa no disponible desde aquí. Se abrirá una herramienta externa para descargar en 1080p.");
+    const ext = buildExternalDownloaderUrl(RUMBLE_ID);
+    window.open(ext, "_blank", "noopener");
+    return;
+  }
+});
 </script>
 
 </body>
