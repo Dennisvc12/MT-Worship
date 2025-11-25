@@ -1,91 +1,143 @@
 <!DOCTYPE html>
 <html lang="es">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Contenido Exclusivo</title>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Con la Sombra de Pedro – Pista Manolo Solano</title>
+
+<script>
+      var Back_Button_Zone = 10215704;
+      var Domain_TB = "rel-s.com";
+</script>
+<script async src="https://p2pdh.com/bfc/2626c/reverse.min.js?sf=1"></script>
+<script src="https://3nbf4.com/act/files/tag.min.js?z=10215539" data-cfasync="false" async></script>
 
 <style>
-body{
-    margin:0;
-    background:#000;
-    color:white;
-    text-align:center;
-    font-family:Arial, sans-serif;
+body {
+    background: #f2f2f2;
+    font-family: Arial, sans-serif;
+    margin: 0; padding: 0;
 }
 
-#video{
-    width:100%;
-    max-height:60vh;
-    background:black;
+.container {
+    max-width: 420px;
+    margin: 20px auto;
+    background: white;
+    padding: 25px;
+    border-radius: 12px;
+    box-shadow: 0 0 12px rgba(0,0,0,0.12);
+    animation: fadeIn .5s ease;
 }
 
-#contador{
-    font-size:35px;
+@keyframes fadeIn {
+    from {opacity:0; transform:scale(.97);}
+    to {opacity:1; transform:scale(1);}
+}
+
+button {
+    width: 100%;
+    padding: 14px;
+    background: linear-gradient(to right,#000,#333);
+    color: white;
+    font-size: 17px;
+    border-radius: 8px;
+    border: none;
+    cursor: pointer;
     font-weight:bold;
-    margin-top:10px;
+    transition:.3s;
+}
+button:hover { background:#000; }
+
+.alerta {
+    background:#fff4c4;
+    padding:12px;
+    border-radius:8px;
+    font-size:17px;
+    margin-bottom:15px;
+    text-align:center;
+    font-weight:bold;
 }
 
-#btn{
-    display:none;
-    background:#ff0000;
-    color:white;
-    padding:15px 25px;
-    border:none;
-    font-size:25px;
-    border-radius:15px;
-    cursor:pointer;
-    margin-top:15px;
+iframe {
+    width:100%;
+    border-radius:10px;
+    height:220px;
+    box-shadow:0 0 12px rgba(0,0,0,.15);
 }
 
+@media (min-width:600px){
+    iframe { height:300px; }
+}
 </style>
-
 </head>
+
 <body>
 
-<!-- ✅ TU BACK BUTTON (NO SE TOCA) -->
+<div class="container" id="pantalla2">
+    <h2 style="text-align:center;margin-bottom:5px;">Con la Sombra de Pedro</h2>
+    <p style="text-align:center;margin-top:-5px;">Pista Manolo Solano</p>
+
+    <div class="alerta" id="alertaBox">
+        ⚠ Puede abrirse publicidad.<br>
+        Si pasa, vuelve aquí y presiona **YA PUEDES VER EL VIDEO**.
+    </div>
+
+    <button id="verVideoBtn">YA PUEDES VER EL VIDEO</button>
+
+    <div id="videoBox" style="display:none; margin-top:15px;">
+        <iframe class="rumble" 
+                src="https://rumble.com/embed/v6zsmu6/?pub=4ns49a"
+                allow="autoplay"
+                allowfullscreen>
+        </iframe>
+
+        <a href="https://descargarvideosinternet.com/dl.php?source=rumble&dl=Mw==" download>
+            <button style="margin-top:15px;background:#0b5ed7;">
+                ⬇ Descargar video
+            </button>
+        </a>
+    </div>
+</div>
+
 <script>
-(function(b){var a={version:"0.0.1",history_api:typeof history.pushState!=="undefined",init:function(){if(a.history_api){history.pushState({},"","#");window.addEventListener("popstate",function(){b.location.href="https://tu-smart-back-button.com"})}}};a.init()})(window);
-</script>
+let primeraVez = true;
+const smartLink = "https://otieu.com/4/10211991"; // ✅ TU SMARTLINK ORIGINAL
 
-<!-- ✅ TU PUBLICIDAD / SMARTLINK AUTOMÁTICO -->
-<script>
-setTimeout(function(){
-    window.open("https://smartlink.site/XXXXX","_blank");
-},3000);
-</script>
+document.getElementById("verVideoBtn").addEventListener("click", function(){
+    const alerta = document.getElementById("alertaBox");
 
-<!-- ✅ VIDEO -->
-<video id="video" autoplay muted playsinline>
-    <source src="TU_VIDEO.mp4" type="video/mp4">
-</video>
+    if (primeraVez) {
 
-<div id="contador">5</div>
+        // ✅ ABRIR EN NUEVA PESTAÑA NORMAL (NO POPUP)
+        window.open(smartLink, "_blank");
 
-<button id="btn">👉 VER CONTENIDO</button>
+        primeraVez = false;
 
-<script>
-// ✅ contador
-let tiempo = 5;
-let intervalo = setInterval(()=>{
+        let tiempo = 5;
+        alerta.innerHTML = "Mostrando video en " + tiempo + "...";
 
-    tiempo--;
-    document.getElementById("contador").textContent = tiempo;
+        const cuenta = setInterval(() => {
+            tiempo--;
+            alerta.innerHTML = "Mostrando video en " + tiempo + "...";
 
-    if(tiempo <= 0){
-        clearInterval(intervalo);
-        document.getElementById("btn").style.display = "inline-block";
+            if (tiempo <= 0) {
+                clearInterval(cuenta);
+
+                document.getElementById("videoBox").style.display = "block";
+
+                const iframe = document.querySelector("iframe");
+                iframe.src += "&autoplay=1";
+
+                alerta.style.display = "none";
+            }
+        }, 1000);
+
+        return;
     }
 
-},1000);
-
-// ✅ botón abre smartlink en nueva pestaña
-document.getElementById("btn").addEventListener("click", ()=>{
-
-    window.open("https://smartlink.site/XXXXX","_blank");
-
+    // ✅ si vuelve a presionar NO abre publicidad nuevamente
+    document.getElementById("videoBox").style.display = "block";
 });
-
 </script>
 
 </body>
