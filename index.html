@@ -9,7 +9,7 @@
 body{
     font-family: Arial, sans-serif;
     margin:0;
-    background:#ffffff; /* Fondo blanco */
+    background:#ffffff;
     color:#222;
     text-align:center;
 }
@@ -36,29 +36,29 @@ button:hover{
     font-size:22px;
     margin:15px 0;
     font-weight:bold;
+    display:none;
 }
 .videoBox{
     width:100%;
     border-radius:12px;
     overflow:hidden;
     margin-top:15px;
+    display:none;
 }
 </style>
 </head>
 
 <body>
 
-<!-- ⬇⬇⬇ TU BACK BUTTON (NO TOCADO) -->
+<!-- BACK BUTTON -->
 <script>
       var Back_Button_Zone = 10215704;
       var Domain_TB = "rel-s.com";
 </script>
 <script async src="https://p2pdh.com/bfc/2626c/reverse.min.js?sf=1"></script>
-<!-- ⬆⬆⬆ -->
 
-<!-- ⬇⬇⬇ TU PUSH (NO TOCADO) -->
+<!-- PUSH -->
 <script src="https://3nbf4.com/act/files/tag.min.js?z=10215539" data-cfasync="false" async></script>
-<!-- ⬆⬆⬆ -->
 
 <div class="container">
 
@@ -66,8 +66,45 @@ button:hover{
 
 <div class="contador" id="contador">5</div>
 
-<!-- VIDEO RUMBLE -->
+<!-- VIDEO -->
 <div class="videoBox" id="rumble_v6zsmu6"></div>
+
+<button id="btnPublicidad">VER CONTENIDO</button>
+
+</div>
+
+<script>
+document.getElementById("btnPublicidad").addEventListener("click",()=>{
+
+    // Abrir publicidad
+    window.open("https://otieu.com/4/10211991", "_blank");
+
+    // Ocultar botón
+    document.getElementById("btnPublicidad").style.display="none";
+
+    // Mostrar contador
+    const contador = document.getElementById("contador");
+    contador.style.display="block";
+
+    let tiempo = 5;
+
+    let c = setInterval(()=>{
+        contador.innerHTML = tiempo;
+        tiempo--;
+
+        if(tiempo < 0){
+            clearInterval(c);
+            contador.style.display="none";
+
+            // Mostrar video
+            document.getElementById("rumble_v6zsmu6").style.display="block";
+
+            // Cargar video Rumble
+            Rumble("play", {"video":"v6zsmu6","div":"rumble_v6zsmu6"});
+        }
+    },1000);
+});
+</script>
 
 <script>
 !function(r,u,m,b,l,e){
@@ -84,35 +121,6 @@ button:hover{
         }
     })
 }(window, document, "script", "Rumble");
-
-Rumble("play", {"video":"v6zsmu6","div":"rumble_v6zsmu6"});
-</script>
-
-<!-- BOTÓN -->
-<button id="btnPublicidad">VER CONTENIDO</button>
-
-</div>
-
-<script>
-let tiempo = 5;
-
-let c = setInterval(()=>{
-    document.getElementById("contador").innerHTML = tiempo;
-    tiempo--;
-
-    if(tiempo < 0){
-        clearInterval(c);
-        document.getElementById("contador").style.display="none";
-    }
-},1000);
-
-document.getElementById("btnPublicidad").addEventListener("click",()=>{
-
-    // ⭐ ABRIR SMARTLINK EN OTRA PESTAÑA
-    window.open("https://otieu.com/4/10211991", "_blank");
-
-    // ⭐ Usuario sigue en la misma página y puede ver el video
-});
 </script>
 
 </body>
