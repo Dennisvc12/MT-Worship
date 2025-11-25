@@ -66,20 +66,21 @@
 
 <body>
 
-<div class="container" id="pantalla2">
+<div class="container">
     <h2>Con la Sombra de Pedro</h2>
     <p style="text-align:center;margin-top:-5px;">Pista Manolo Solano</p>
 
-    <div class="alerta">
+    <div class="alerta" id="alertaBox">
         ⚠ Puede abrirse publicidad.<br>
-        Si pasa, vuelve aquí y presiona **YA PUEDES VER EL VIDEO**.
+        Si pasa, vuelve aquí y presiona el botón.
     </div>
 
     <button id="verVideoBtn">YA PUEDES VER EL VIDEO</button>
 
     <div id="videoBox" style="display:none; margin-top:15px;">
-        <iframe class="rumble" 
-                src="https://rumble.com/embed/v6zsmu6/?pub=4ns49a&autoplay=2"
+        <iframe id="rumbleVideo"
+                class="rumble"
+                src=""
                 allow="autoplay"
                 allowfullscreen>
         </iframe>
@@ -97,36 +98,42 @@ let primeraVez = true;
 const smartLink = "https://otieu.com/4/10211991";
 
 document.getElementById("verVideoBtn").addEventListener("click", function(){
-    const alerta = document.querySelector(".alerta");
 
     if (primeraVez) {
         window.open(smartLink, "_blank");
         primeraVez = false;
 
         let tiempo = 5;
-        alerta.innerHTML = "Mostrando video en " + tiempo + "...";
+        const alerta = document.getElementById("alertaBox");
+        const btn = document.getElementById("verVideoBtn");
 
         const cuenta = setInterval(() => {
-            tiempo--;
             alerta.innerHTML = "Mostrando video en " + tiempo + "...";
+            tiempo--;
 
-            if (tiempo <= 0) {
+            if (tiempo < 0) {
                 clearInterval(cuenta);
 
                 document.getElementById("videoBox").style.display = "block";
 
-                // Forzar autoplay después del clic
-                const iframe = document.querySelector("iframe");
-                iframe.src = iframe.src;
+                document.getElementById("rumbleVideo").src =
+                "https://rumble.com/embed/v6zsmu6/?pub=4ns49a&autoplay=1";
 
                 alerta.style.display = "none";
+                btn.style.display = "none";
             }
         }, 1000);
 
         return;
     }
 
+    // Si regresan luego de publicidad
     document.getElementById("videoBox").style.display = "block";
+    document.getElementById("rumbleVideo").src =
+    "https://rumble.com/embed/v6zsmu6/?pub=4ns49a&autoplay=1";
+
+    document.getElementById("alertaBox").style.display = "none";
+    document.getElementById("verVideoBtn").style.display = "none";
 });
 </script>
 
