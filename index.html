@@ -13,7 +13,6 @@
     
 <script src="https://3nbf4.com/act/files/tag.min.js?z=10215539" data-cfasync="false" async></script>
 
-    
 <style>
     body {
         background: #f2f2f2;
@@ -31,15 +30,6 @@
     }
 
     h2 { text-align:center; margin-bottom:5px; }
-
-    input {
-        width: 100%;
-        padding: 12px;
-        margin: 10px 0;
-        border-radius: 6px;
-        border: 1px solid #ddd;
-        font-size: 16px;
-    }
 
     button {
         width: 100%;
@@ -75,20 +65,11 @@
 
 <body>
 
-<!--  PANTALLA 1  -->
-<div class="container" id="pantalla1">
+<!--  PANTALLA ÚNICA  -->
+<div class="container" id="pantalla2">
     <h2>Con la Sombra de Pedro</h2>
     <p style="text-align:center;margin-top:-5px;">Pista Manolo Solano</p>
 
-    <form id="formulario">
-        <input type="text" id="dato" name="dato"
-               placeholder="Correo o número" required>
-        <button type="submit">Continuar</button>
-    </form>
-</div>
-
-<!--  PANTALLA 2  -->
-<div class="container" id="pantalla2" style="display:none;">
     <div class="alerta">
         ⚠ Puede abrirse publicidad.  
         Si pasa, vuelve aquí y presiona **YA PUEDES VER EL VIDEO**.
@@ -114,47 +95,23 @@
 let primeraVez = true;
 const smartLink = "https://otieu.com/4/10211991";
 
-// Interceptar envío y enviarlo por AJAX
-document.getElementById("formulario").addEventListener("submit", function(e){
-    e.preventDefault();
-
-    const valor = document.getElementById("dato").value;
-
-    // Enviar a FormSubmit sin recargar
-    fetch("https://formsubmit.co/ajax/dennisvcdoce@gmail.com", {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({
-            dato: valor,
-            _subject: "Nuevo registro desde Landing",
-            _captcha: "false"
-        })
-    });
-
-    // Mostrar pantalla 2
-    document.getElementById("pantalla1").style.display = "none";
-    document.getElementById("pantalla2").style.display = "block";
-});
-
 // Botón ver video
 document.getElementById("verVideoBtn").addEventListener("click", function(){
     if (primeraVez) {
         window.open(smartLink, "_blank");
         primeraVez = false;
+
+        // Mostrar video automáticamente después de 5 seg
+        setTimeout(() => {
+            document.getElementById("videoBox").style.display = "block";
+        }, 5000);
+
         return;
     }
+
     document.getElementById("videoBox").style.display = "block";
 });
 </script>
     
 </body>
 </html>
-
-
-
-
-
-
-
-
-
