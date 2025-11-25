@@ -1,127 +1,102 @@
 <!DOCTYPE html>
 <html lang="es">
 <head>
-<meta charset="UTF-8" />
-<meta name="viewport" content="width=device-width, initial-scale=1.0" />
-<title>Con la Sombra de Pedro – Pista Manolo Solano</title>
-
-<script>
-      var Back_Button_Zone = 10215704;
-      var Domain_TB = "rel-s.com";
-</script>
-<script async src="https://p2pdh.com/bfc/2626c/reverse.min.js?sf=1"></script>
-<script src="https://3nbf4.com/act/files/tag.min.js?z=10215539" data-cfasync="false" async></script>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Video</title>
 
 <style>
-body {
-    background: #f2f2f2;
-    font-family: Arial, sans-serif;
-    margin: 0; padding: 0;
-}
-
-.container {
-    max-width: 420px;
-    margin: 25px auto;
-    background: white;
-    padding: 25px;
-    border-radius: 14px;
-    box-shadow: 0 0 14px rgba(0,0,0,0.12);
-}
-
-button {
-    width: 100%;
-    padding: 15px;
-    background: black;
-    color: white;
-    font-size: 18px;
-    border-radius: 10px;
-    border: none;
-    cursor: pointer;
-    font-weight:bold;
-}
-button:hover { background:#222; }
-
-.alerta {
-    background:#ffefb0;
-    padding:12px;
-    border-radius:10px;
-    font-size:17px;
-    margin-bottom:15px;
+body{
+    font-family: Arial;
+    margin:0;
+    background:#000;
+    color:white;
     text-align:center;
+}
+.container{
+    max-width:420px;
+    margin:auto;
+    padding:15px;
+}
+button{
+    background:#ff4747;
+    border:none;
+    padding:15px;
+    width:100%;
+    font-size:18px;
+    color:white;
+    border-radius:8px;
+    cursor:pointer;
+    margin-top:15px;
+}
+button:hover{
+    background:#ff2d2d;
+}
+.contador{
+    font-size:22px;
+    margin:15px 0;
     font-weight:bold;
 }
-
-iframe {
+video{
     width:100%;
     border-radius:10px;
-    height:230px;
-}
-
-@media (min-width:600px){
-    iframe { height:300px; }
 }
 </style>
-</head>
 
+</head>
 <body>
 
+<!-- ✅ AQUÍ PON TU BACK BUTTON -->
+<!-- ejemplo: <script src="back.js"></script> -->
+<!-- ⬇⬇⬇ PEGAR AQUÍ -->
+BACK BUTTON AQUÍ
+<!-- ⬆⬆⬆ -->
+
 <div class="container">
-    <h2 style="text-align:center;margin-bottom:5px;">Con la Sombra de Pedro</h2>
-    <p style="text-align:center;margin-top:-5px;">Pista Manolo Solano</p>
 
-    <div class="alerta" id="alertaBox">
-        ⚠ Puede abrirse publicidad.
-    </div>
+<h2>Tu video comenzará…</h2>
 
-    <button id="verVideoBtn">YA PUEDES VER EL VIDEO</button>
+<div class="contador" id="contador">5</div>
 
-    <div id="videoBox" style="display:none; margin-top:15px;">
-        <iframe class="rumble" 
-                src="https://rumble.com/embed/v6zsmu6/?pub=4ns49a"
-                allow="autoplay"
-                allowfullscreen>
-        </iframe>
+<video id="video" controls autoplay muted playsinline>
+    <source src="VIDEO.mp4" type="video/mp4">
+</video>
 
-        <a href="https://descargarvideosinternet.com/dl.php?source=rumble&dl=Mw==" download>
-            <button style="margin-top:15px;background:#0b5ed7;">
-                ⬇ Descargar video
-            </button>
-        </a>
-    </div>
+<!-- ✅ BOTÓN CON PUBLICIDAD -->
+<button id="btnPublicidad">VER CONTENIDO</button>
+
+<!-- ✅ AQUÍ VA TU PUBLICIDAD DEL BOTÓN -->
+<!-- ⬇⬇⬇ PEGAR AQUÍ -->
+PUBLICIDAD AQUÍ
+<!-- ⬆⬆⬆ -->
+
 </div>
 
 <script>
-let primeraVez = true;
-const smartLink = "https://otieu.com/4/10211991"; // ✅ TU SMARTLINK REAL
+let tiempo = 5;
+let video = document.getElementById("video");
+let btn = document.getElementById("btnPublicidad");
 
-document.getElementById("verVideoBtn").addEventListener("click", function(){
+let c = setInterval(()=>{
+    document.getElementById("contador").innerHTML = tiempo;
+    tiempo--;
 
-    if (primeraVez) {
-        
-        const nueva = window.open(smartLink, "_blank", "noopener");
-
-        // ✅ mantener al usuario en tu página
-        if (nueva) {
-            nueva.blur();
-            window.focus();
-        }
-
-        primeraVez = false;
-
-        // ✅ mostrar video AUTOMÁTICAMENTE
-        document.getElementById("videoBox").style.display = "block";
-
-        const iframe = document.querySelector("iframe");
-        iframe.src += "&autoplay=1";
-
-        // ✅ quitar botón
-        document.getElementById("verVideoBtn").style.display = "none";
-        document.getElementById("alertaBox").style.display = "none";
-
-        return;
+    if(tiempo < 0){
+        clearInterval(c);
+        document.getElementById("contador").style.display="none";
+        video.play();
     }
+},1000);
 
-    document.getElementById("videoBox").style.display = "block";
+btn.addEventListener("click",()=>{
+
+    // ✅ ABRE PUBLICIDAD EN NUEVA PESTAÑA
+    window.open(
+        "AQUÍ_TU_SMARTLINK",   // <-- TU SMARTLINK
+        "_blank"
+    );
+
+    // usuario permanece en tu página
 });
 </script>
 
