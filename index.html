@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Contenido</title>
+<title>Con la Sombra de Pedro – Pista Manolo Solano</title>
 
 <style>
 body{
@@ -45,6 +45,10 @@ button:hover{
     margin-top:15px;
     display:none;
 }
+.descargar{
+    background:#0b5ed7;
+    margin-top:15px;
+}
 </style>
 </head>
 
@@ -62,47 +66,68 @@ button:hover{
 
 <div class="container">
 
-<h2>Tu contenido está listo</h2>
+<h2>CON LA SOMBRA DE PEDRO<br>Pista y Letra – Manolo Solano</h2>
+
+<div id="mensaje">Haz clic en el botón para ver el contenido</div>
 
 <div class="contador" id="contador">5</div>
 
-<!-- VIDEO -->
 <div class="videoBox" id="rumble_v6zsmu6"></div>
 
 <button id="btnPublicidad">VER CONTENIDO</button>
 
+<a id="descargarBtn" href="#" download style="display:none;">
+    <button class="descargar">⬇ Descargar video</button>
+</a>
+
 </div>
 
 <script>
-document.getElementById("btnPublicidad").addEventListener("click",()=>{
+let clicRealizado = false;
+let contadorIniciado = false;
 
-    // Abrir publicidad
+document.getElementById("btnPublicidad").addEventListener("click",()=>{
+    clicRealizado = true;
+
     window.open("https://otieu.com/4/10211991", "_blank");
 
-    // Ocultar botón
-    document.getElementById("btnPublicidad").style.display="none";
+    document.getElementById("mensaje").innerHTML = "Regresa aquí para ver el video 👇";
+});
 
-    // Mostrar contador
-    const contador = document.getElementById("contador");
-    contador.style.display="block";
+// Detectar cuando el usuario regresa
+document.addEventListener("visibilitychange", ()=>{
 
-    let tiempo = 5;
+    if(!clicRealizado || contadorIniciado) return;
 
-    let c = setInterval(()=>{
-        contador.innerHTML = tiempo;
-        tiempo--;
+    if(!document.hidden){
+        contadorIniciado = true;
 
-        if(tiempo < 0){
-            clearInterval(c);
-            contador.style.display="none";
+        document.getElementById("btnPublicidad").style.display="none";
 
-            // Mostrar video
-            document.getElementById("rumble_v6zsmu6").style.display="block";
+        const contador = document.getElementById("contador");
+        contador.style.display="block";
 
-            // Cargar video Rumble
-            Rumble("play", {"video":"v6zsmu6","div":"rumble_v6zsmu6"});
-        }
-    },1000);
+        let tiempo = 5;
+
+        let c = setInterval(()=>{
+            contador.innerHTML = tiempo;
+            tiempo--;
+
+            if(tiempo < 0){
+                clearInterval(c);
+                contador.style.display="none";
+
+                document.getElementById("rumble_v6zsmu6").style.display="block";
+
+                Rumble("play", {"video":"v6zsmu6","div":"rumble_v6zsmu6"});
+
+                // Mostrar botón descargar
+                document.getElementById("descargarBtn").style.display="block";
+                document.getElementById("descargarBtn").href =
+                    "https://descargarvideosinternet.com/dl.php?source=rumble&dl=Mw==";
+            }
+        },1000);
+    }
 });
 </script>
 
