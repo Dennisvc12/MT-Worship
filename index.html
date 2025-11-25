@@ -49,6 +49,7 @@
         border-radius:6px;
         font-size:14px;
         margin-bottom:15px;
+        text-align:center;
     }
 
     iframe {
@@ -65,7 +66,6 @@
 
 <body>
 
-<!--  PANTALLA ÚNICA  -->
 <div class="container" id="pantalla2">
     <h2>Con la Sombra de Pedro</h2>
     <p style="text-align:center;margin-top:-5px;">Pista Manolo Solano</p>
@@ -95,16 +95,25 @@
 let primeraVez = true;
 const smartLink = "https://otieu.com/4/10211991";
 
-// Botón ver video
 document.getElementById("verVideoBtn").addEventListener("click", function(){
     if (primeraVez) {
         window.open(smartLink, "_blank");
         primeraVez = false;
 
-        // Mostrar video automáticamente después de 5 seg
-        setTimeout(() => {
-            document.getElementById("videoBox").style.display = "block";
-        }, 5000);
+        const alerta = document.querySelector(".alerta");
+        let tiempo = 5;
+        alerta.textContent = "Mostrando video en " + tiempo + "...";
+
+        const cuenta = setInterval(() => {
+            tiempo--;
+            alerta.textContent = "Mostrando video en " + tiempo + "...";
+
+            if (tiempo <= 0) {
+                clearInterval(cuenta);
+                document.getElementById("videoBox").style.display = "block";
+                alerta.style.display = "none";
+            }
+        }, 1000);
 
         return;
     }
