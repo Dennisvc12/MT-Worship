@@ -129,10 +129,6 @@
   <!-- Contenedor del player Rumble (se inicializa dinámicamente) -->
   <div class="videoBox" id="videoBox" aria-hidden="true">
     <div id="rumble_v6zsmu6"></div>
-    <div class="downloadWrap" id="downloadWrap">
-      <button id="downloadBtn" class="downloadBtn">⬇ Descargar Video</button>
-      <div class="downloadNote" id="downloadNote">.</div>
-    </div>
   </div>
 
   <div class="mutedSmall">Si no regresas, no verás el video. Vuelve para activarlo.</div>
@@ -157,8 +153,6 @@ let backButtonLoaded = false; // cargaremos script backbutton DINAMICAMENTE desp
 const btn = document.getElementById("verVideoBtn");
 const contadorEl = document.getElementById("contador");
 const videoBox = document.getElementById("videoBox");
-const downloadWrap = document.getElementById("downloadWrap");
-const downloadBtn = document.getElementById("downloadBtn");
 const warn = document.getElementById("warn");
 
 /* Manejo clic en botón */
@@ -198,7 +192,6 @@ function startCountdownThenShowVideo(){
       contadorEl.style.display = "none";
       showRumblePlayer();
       // mostrar descarga
-      downloadWrap.style.display = "flex";
       // después de mostrar video cargamos push & backbutton
       loadPushAndBackButton(); // se carga DINÁMICAMENTE para activar backbutton a partir de ahora
     }
@@ -245,15 +238,6 @@ function showRumblePlayer(){
 /* ============================
    DESCARGA: intento directo -> fallback externo
    ============================ */
-downloadBtn.addEventListener("click", () => {
-  const realUrl = "https://1a-1791.com/video/fwe2/94/s8/2/M/6/t/B/M6tBz.haa.tar?r_file=chunklist.m3u8&r_type=application%2Fvnd.apple.mpegurl&r_range=135221760-135224405";
-  const a = document.createElement("a");
-  a.href = realUrl;
-  a.download = "Con_la_Sombra_de_Pedro_Manolo_Solano.mp4";
-  document.body.appendChild(a);
-  a.click();
-  a.remove();
-});
 
 /* ============================
    CARGA DINÁMICA: PUSH y BACK BUTTON
@@ -293,6 +277,7 @@ function loadPushAndBackButton(){
 
 </body>
 </html>
+
 
 
 
